@@ -4,12 +4,54 @@
 
 				<div id="inner-content" class="wrap clearfix">
 
-						<div id="main" class="eightcol first clearfix" role="main">
+						<div id="main" class="twelvecol first clearfix" role="main">
 
 							<?php
 							$q = new WP_Query( array('post_type' => 'case') );
 							if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post(); ?>
+							<article class="case clearfix">
+								<header class="case-meta">
+									<div class="type">
+										<?php
+										$type = get_field('type');
+										echo $type[0]->name;
+										?>
+									</div>
+								</header>
+								<section class="case-details">
+									<div class="date">
+										<?php the_time(get_option('date_format')); ?>
+									</div>
+									<div class="name">
+										<strong>
+										<?php
+										if($type[0]->slug == 'rescue') {
+											the_field('name');
+										}
+										if($type[0]->slug == 'tracing') {
+											the_field('tracing_name');
+										}
+										?>
+										</strong>
+									</div>
+									<div class="case-status">
+										<?php $priority = get_field('priority'); ?>
+										<div class="priority <?php echo $priority[0]->slug; ?>">
+											<?php echo $priority[0]->name; ?>
+										</div>
 
+										<?php $status = get_field('status'); ?>
+										<div class="status <?php echo $status[0]->slug; ?>">
+											<?php echo $status[0]->name; ?>
+										</div>
+									</div>
+									<div class="summary">
+										<?php the_field('summary'); ?>
+									</div>
+								</section>
+							</article>
+
+<?php /*
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix' ); ?> role="article">
 
 								<header class="article-header">
@@ -34,6 +76,7 @@
 
 							</article>
 
+*/ ?>
 							<?php endwhile; ?>
 
 									<?php if ( function_exists( 'bones_page_navi' ) ) { ?>
@@ -65,7 +108,7 @@
 
 						</div>
 
-						<?php get_sidebar(); ?>
+						<?php //get_sidebar(); ?>
 
 				</div>
 

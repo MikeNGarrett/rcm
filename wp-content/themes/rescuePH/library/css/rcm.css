@@ -1,3 +1,91 @@
+body {
+	background:#EEE;
+	font-family:Helvetica, Arial, sans-serif;
+	line-height:1.4;
+}
+li,h2,h3,h1,h4,h5,p,span {
+	font-family:Helvetica, Arial, sans-serif;
+}
+
+a, a:link, a:visited {
+	font-family:Helvetica, Arial, sans-serif;
+	color:#0093d7;
+}
+a:hover, a:focus, a:visited:hover, a:visited:focus, a:active {
+	color:#009ee7;
+	text-decoration: underline;
+}
 #map-canvas {
 	height: 300px;
 }
+.case {
+	background: #FFF;
+	margin: 15px 0;
+	padding: 15px;
+	position: relative;
+}
+.case-meta {
+	float: left;
+	padding-right: 20px;
+	border-right: 1px solid #DDD;
+	margin-right: 20px;
+}
+.case-meta div {
+	padding: 20px 0;
+}
+.case-details {
+	overflow: auto;
+}
+.case-details div {
+	float: left;
+	padding-right: 5%;
+}
+.summary {
+	padding-top: 20px;
+	clear: both;
+}
+.case-details .case-status {
+	position: absolute;
+	top: 0;
+	right: 0;
+	float: none !important;
+	padding: 0;
+}
+.case-details .status, .case-details .priority {
+	padding: 10px !important;
+	background: #414141;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 14px;
+}
+.case-details .priority.low {
+	background: #414141;
+}
+.case-details .priority.normal {
+	background: #005d87;
+}
+.case-details .priority.high {
+	background: #d79e00;
+}
+.case-details .priority.urgent {
+	background: #d70000;
+}
+
+
+/*
+.case-details .status.active {
+	background: #25b325;
+}
+.case-details .status.closed {
+	background: #3f3f3f;
+}
+.case-details .status.help-on-the-way {
+	background:#cca000;
+}
+.case-details .status.new-case {
+	background:#00badb;
+}
+.case-details .status.on-hold {
+	background: #340000;
+}
+*/
