@@ -6,7 +6,9 @@
 
 						<div id="main" class="eightcol first clearfix" role="main">
 
-							<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+							<?php
+							$q = new WP_Query( array('post_type' => 'case') );
+							if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post(); ?>
 
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix' ); ?> role="article">
 
