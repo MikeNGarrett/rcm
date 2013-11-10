@@ -35,9 +35,6 @@ taxonomy-shoes.php
 									</div>
 								</header>
 								<section class="case-details">
-									<div class="date">
-										<?php the_time(get_option('date_format')); ?>
-									</div>
 									<div class="name">
 										<strong>
 										<?php
@@ -49,6 +46,9 @@ taxonomy-shoes.php
 										}
 										?>
 										</strong>
+									</div>
+									<div class="date">
+										<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
 									</div>
 									<div class="case-status">
 										<?php $priority = get_field('priority'); ?>
@@ -63,6 +63,7 @@ taxonomy-shoes.php
 									</div>
 									<div class="summary">
 										<?php the_field('summary'); ?>
+										<a href="<?php the_permalink(); ?>">View Case &raquo;</a>
 									</div>
 								</section>
 							</article>

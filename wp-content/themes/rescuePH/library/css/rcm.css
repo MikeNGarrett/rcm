@@ -10,6 +10,7 @@ li,h2,h3,h1,h4,h5,p,span {
 a, a:link, a:visited {
 	font-family:Helvetica, Arial, sans-serif;
 	color:#0093d7;
+	text-decoration: none;
 }
 a:hover, a:focus, a:visited:hover, a:visited:focus, a:active {
 	color:#009ee7;
@@ -89,3 +90,18 @@ a:hover, a:focus, a:visited:hover, a:visited:focus, a:active {
 	background: #340000;
 }
 */
+.nav {
+	background: #0093d7;
+	color: #FFF;
+}
+.nav li a {
+	background-color: #0093d7;
+	color: #FFF;
+}
+.nav li ul.sub-menu li a, .nav li ul.children li a {
+	border-bottom: 1px solid #006CC0;
+}
+.nav li a:hover, .nav li a:focus {
+	background: #00ADFF;
+	color: #FFF;
+}
