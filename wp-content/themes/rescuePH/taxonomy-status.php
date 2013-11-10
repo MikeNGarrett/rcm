@@ -21,7 +21,7 @@ taxonomy-shoes.php
 
 						<div id="main" class="twelvecol first clearfix" role="main">
 
-							<h1 class="archive-title h2"><span><?php _e( 'Cases with', 'bonestheme' ); ?></span> <?php single_cat_title(); ?> <span>Priority</span></h1>
+							<h1 class="archive-title h2"><?php single_cat_title(); ?> Cases</h1>
 
 							<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
