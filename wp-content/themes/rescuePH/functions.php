@@ -25,13 +25,6 @@ sidebars, comments, ect.
 */
 require_once( 'library/bones.php' ); // if you remove this, bones will break
 /*
-2. library/custom-post-type.php
-	- an example custom post type
-	- example custom taxonomy (like categories)
-	- example custom taxonomy (like tags)
-*/
-require_once( 'library/custom-post-type.php' ); // you can disable this if you like
-/*
 3. library/admin.php
 	- removing some default WordPress dashboard widgets
 	- an example custom dashboard widget
@@ -44,6 +37,39 @@ require_once( 'library/custom-post-type.php' ); // you can disable this if you l
 	- adding support for other languages
 */
 // require_once( 'library/translation/translation.php' ); // this comes turned off by default
+
+
+add_action('init', 'cptui_register_my_cpt_case');
+function cptui_register_my_cpt_case() {
+register_post_type('case', array(
+'label' => 'Cases',
+'description' => '',
+'public' => true,
+'show_ui' => true,
+'show_in_menu' => true,
+'capability_type' => 'post',
+'map_meta_cap' => true,
+'hierarchical' => false,
+'rewrite' => array('slug' => 'case', 'with_front' => true),
+'query_var' => true,
+'supports' => array('title','editor','excerpt','trackbacks','custom-fields','comments','revisions','thumbnail','author','page-attributes','post-formats'),
+'labels' => array (
+  'name' => 'Cases',
+  'singular_name' => 'Case',
+  'menu_name' => 'Cases',
+  'add_new' => 'Add Case',
+  'add_new_item' => 'Add New Case',
+  'edit' => 'Edit',
+  'edit_item' => 'Edit Case',
+  'new_item' => 'New Case',
+  'view' => 'View Case',
+  'view_item' => 'View Case',
+  'search_items' => 'Search Cases',
+  'not_found' => 'No Cases Found',
+  'not_found_in_trash' => 'No Cases Found in Trash',
+  'parent' => 'Parent Case',
+)
+) ); }
 
 /************* THUMBNAIL SIZE OPTIONS *************/
 
