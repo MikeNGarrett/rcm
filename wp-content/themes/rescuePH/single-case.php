@@ -18,28 +18,38 @@ single-bookmarks.php
 			<div id="content">
 
 				<div id="inner-content" class="wrap clearfix">
-
-						<div id="main" class="eightcol first clearfix" role="main">
+					<!-- Changed to full width -->
+						<div id="main" class="twelvecol first clearfix" role="main">
 
 							<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 							<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
-
 								<header class="article-header">
-
-									<h1 class="single-title custom-post-type-title"><?php the_title(); ?></h1>
-									<p class="byline vcard"><?php
-										printf( __( 'Posted <time class="updated" datetime="%1$s" pubdate>%2$s</time> by <span class="author">%3$s</span>.', 'bonestheme' ), get_the_time( 'Y-m-j' ), get_the_time( __( 'F jS, Y', 'bonestheme' ) ), bones_get_the_author_posts_link());
-									?></p>
-
+									<div class="single-title custom-post-type-title">											<div class="date">
+										<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
+									</div>																					<h1><?php the_title(); ?></h1>
+								<h2><?php if($summary = get_field('summary')) { ?>
+									<?php echo $summary; ?>
+									<?php } ?></h2>
+									</div>
 								</header>
+								
+								<section class="case-details">
+									<div class="case-status">
+										<?php $priority = get_field('priority'); ?>
+										<div class="priority <?php echo $priority[0]->slug; ?>">
+											<?php echo $priority[0]->name; ?>
+										</div>
 
+										<?php $status = get_field('status'); ?>
+										<div class="status <?php echo $status[0]->slug; ?>">
+											<?php echo $status[0]->name; ?>
+										</div>
+									</div>
+								</section>
+								
 								<section class="entry-content clearfix">
-
-									<?php if($summary = get_field('summary')) { ?>
-										<h2>Summary</h2>
-										<?php echo $summary; ?>
-									<?php } ?>
+									<div class="summary">
 									<?php if($status = get_field('status')) { ?>
 										<h2>Status</h2>
 										<?php
@@ -168,7 +178,7 @@ single-bookmarks.php
 
 									<h2>More details</h2>
 									<?php the_content(); ?>
-
+									</div>
 								</section>
 
 								<footer class="article-footer">
@@ -185,13 +195,14 @@ single-bookmarks.php
 
 									<article id="post-not-found" class="hentry clearfix">
 										<header class="article-header">
-											<h1><?php _e( 'Oops, Post Not Found!', 'bonestheme' ); ?></h1>
+										<!-- Amended Not Found Messages -->
+											<h1><?php _e( 'Case Not Found!', 'ResuePH' ); ?></h1>
 										</header>
 										<section class="entry-content">
-											<p><?php _e( 'Uh Oh. Something is missing. Try double checking things.', 'bonestheme' ); ?></p>
+											<p><?php _e( 'Something is missing. Try double checking things.', 'ResuePH' ); ?></p>
 										</section>
 										<footer class="article-footer">
-												<p><?php _e( 'This is the error message in the single-custom_type.php template.', 'bonestheme' ); ?></p>
+												<p><?php _e( 'This is the error message in the single-custom_type.php template.', 'ResuePH' ); ?></p>
 										</footer>
 									</article>
 
@@ -199,7 +210,7 @@ single-bookmarks.php
 
 						</div>
 
-						<?php get_sidebar(); ?>
+						<!-- Removed Sidebar	<?php get_sidebar(); ?> -->
 
 				</div>
 
