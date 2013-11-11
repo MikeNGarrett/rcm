@@ -5,7 +5,7 @@
 				<div id="inner-content" class="wrap clearfix">
 
 						<div id="main" class="twelvecol first clearfix" role="main">
-							<table>
+							<table id="caseTable">
 								<thead>
 								<tr>
 									<th>Type</th>
@@ -63,11 +63,12 @@
 								</td>
 								<td>
 									<a class="" href="<?php the_permalink(); ?>" target="_blank" rel="nofollow">
-									View Case
+									<span class="">view case</span>
+									<span class=""><span></span></span>
 									</a>
 								</td>
 								</tr>
-
+							
 
 <?php /*
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix' ); ?> role="article">
