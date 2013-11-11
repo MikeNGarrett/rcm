@@ -27,6 +27,16 @@ single-bookmarks.php
 								<header class="article-header">
 									<div class="single-title custom-post-type-title">											<div class="date">
 										<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
+									<?php if($status = get_field('status')) { ?>
+										<?php
+										foreach ($status as $term) {
+										    $term_link = get_term_link( $term, 'status' );
+										    if( is_wp_error( $term_link ) )
+										        continue;
+										    echo ' - <a href="' . $term_link . '">' . $term->name . '</a>';
+										}
+										?>
+									<?php } ?>									
 									</div>																					<h1><?php the_title(); ?></h1>
 								<h2><?php if($summary = get_field('summary')) { ?>
 									<?php echo $summary; ?>
@@ -50,18 +60,6 @@ single-bookmarks.php
 								
 								<section class="entry-content clearfix">
 									<div class="summary">
-									<?php if($status = get_field('status')) { ?>
-										<h2>Status</h2>
-										<?php
-										echo '<ul>';
-										foreach ($status as $term) {
-										    $term_link = get_term_link( $term, 'status' );
-										    if( is_wp_error( $term_link ) )
-										        continue;
-										    echo '<li><a href="' . $term_link . '">' . $term->name . '</a></li>';
-										}
-										echo '</ul>'; ?>
-									<?php } ?>
 									<?php if($priority = get_field('priority')) { ?>
 										<h2>Priority</h2>
 										<?php
