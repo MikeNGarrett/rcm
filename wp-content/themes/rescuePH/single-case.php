@@ -36,14 +36,15 @@ single-bookmarks.php
 										    echo ' - <a href="' . $term_link . '">' . $term->name . '</a>';
 										}
 										?>
-									<?php } ?>									
-									</div>																					<h1><?php the_title(); ?></h1>
-								<h2><?php if($summary = get_field('summary')) { ?>
-									<?php echo $summary; ?>
+									<?php } ?>
+									</div>
+									<h1><?php the_title(); ?></h1>
+									<h2><?php if($summary = get_field('summary')) { ?>
+										<?php echo $summary; ?>
 									<?php } ?></h2>
 									</div>
 								</header>
-								
+
 								<section class="case-details">
 									<div class="case-status">
 										<?php $priority = get_field('priority'); ?>
@@ -57,7 +58,7 @@ single-bookmarks.php
 										</div>
 									</div>
 								</section>
-								
+
 								<section class="entry-content clearfix">
 									<div class="summary">
 									<?php if($priority = get_field('priority')) { ?>
