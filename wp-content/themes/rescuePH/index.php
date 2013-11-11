@@ -5,22 +5,35 @@
 				<div id="inner-content" class="wrap clearfix">
 
 						<div id="main" class="twelvecol first clearfix" role="main">
-
+							<table>
+								<thead>
+								<tr>
+									<th>Type</th>
+									<th>Name</th>
+									<th>Date</th>
+									<th>Priority</th>
+									<th>Status</th>
+									<th>Summary</th>
+									<th>Actions</th>
+								</tr>
+								</thead>
+								<tbody>
 							<?php
 							$q = new WP_Query( array('post_type' => 'case') );
 							if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post(); ?>
-							<article class="case clearfix">
-								<header class="case-meta">
-									<div class="type">
+							<tr class="<?php
+							$type = get_field('type');
+							$priority = get_field('priority');
+							echo $type[0]->slug, " ";
+							echo $priority[0]->slug;
+							?> case">
+								<td>
 										<?php
 										$type = get_field('type');
 										echo $type[0]->name;
 										?>
-									</div>
-								</header>
-								<section class="case-details">
-									<div class="name">
-										<strong>
+								</td>
+								<td>
 										<?php
 										if($type[0]->slug == 'rescue') {
 											the_field('name');
@@ -29,28 +42,32 @@
 											the_field('tracing_name');
 										}
 										?>
-										</strong>
-									</div>
-									<div class="date">
+								</td>
+								<td>
 										<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
-									</div>
-									<div class="case-status">
+								</td>
+								<td>
 										<?php $priority = get_field('priority'); ?>
 										<div class="priority <?php echo $priority[0]->slug; ?>">
 											<?php echo $priority[0]->name; ?>
 										</div>
-
+								</td>
+								<td>
 										<?php $status = get_field('status'); ?>
 										<div class="status <?php echo $status[0]->slug; ?>">
 											<?php echo $status[0]->name; ?>
 										</div>
-									</div>
-									<div class="summary">
+								</td>
+								<td>
 										<?php the_field('summary'); ?>
-										<a href="<?php the_permalink(); ?>">View Case &raquo;</a>
-									</div>
-								</section>
-							</article>
+								</td>
+								<td>
+									<a class="" href="<?php the_permalink(); ?>" target="_blank" rel="nofollow">
+									View Case
+									</a>
+								</td>
+								</tr>
+
 
 <?php /*
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix' ); ?> role="article">
@@ -79,7 +96,8 @@
 
 */ ?>
 							<?php endwhile; ?>
-
+								</tbody>
+							</table>
 									<?php if ( function_exists( 'bones_page_navi' ) ) { ?>
 											<?php bones_page_navi(); ?>
 									<?php } else { ?>
