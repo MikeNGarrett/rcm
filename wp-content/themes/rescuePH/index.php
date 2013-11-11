@@ -9,7 +9,12 @@
 							<?php
 							$q = new WP_Query( array('post_type' => 'case') );
 							if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post(); ?>
-							<article class="case clearfix">
+							<article class="<?php
+							$type = get_field('type');
+							$priority = get_field('priority');
+							echo $type[0]->slug, " ";
+							echo $priority[0]->slug;
+							?> case clearfix">
 								<header class="case-meta">
 									<div class="type">
 										<?php
