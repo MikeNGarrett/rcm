@@ -52,7 +52,12 @@
 									</div>
 									<div class="summary">
 										<?php the_field('summary'); ?>
-										<a href="<?php the_permalink(); ?>">View Case &raquo;</a>
+								
+									<a class="casebutton" href="<?php the_permalink(); ?>" target="_blank" rel="nofollow">
+									<span class="btn-text">view case</span>
+									<span class="btn-icon-right"><span></span></span>
+									</a>
+									
 									</div>
 								</section>
 							</article>

@@ -150,3 +150,66 @@ a:hover, a:focus, a:visited:hover, a:visited:focus, a:active {
 .header{
 	background: #FFF;
 }
+a.casebutton{
+	position: absolute;
+	top: 56px;
+	right: 0px;
+	float: none !important; 
+    padding-left:15px;
+    padding-right:80px;
+    margin: 0px;
+    background:#2E4DA7;
+    height:38px; width:150px;
+    display:inline-block;
+    overflow:hidden;
+}
+
+a.casebutton span.btn-text{
+	background: #2E4DA7;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 14px;
+	clear: both;
+	text-align:center;
+	margin:0 auto;
+	padding-top:9px;
+    display:block;
+    white-space:nowrap;
+    text-shadow:0px 1px 1px rgba(255,255,255,0.3);
+    text-decoration:none;
+}
+
+span.btn-icon-right{
+    position:absolute;
+    right:0px;
+    top:0px;
+    height:100%;
+    width:52px;
+    border-left:1px solid #5d81ab;
+}
+span.btn-icon-right span{
+   	width:38px;
+    height:38px;
+    opacity:0.7;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin:-20px 0px 0px -20px;
+    background:transparent url(../images/arrow_right.png) no-repeat 50% 55%;
+}
+span.btn-icon-right.download span{background:transparent url(../images/arrow_down.png) no-repeat 50% 55%;}
+a.casebutton:hover span.btn-text{
+    text-shadow: 0px 1px 1px #5d81ab;
+    color: #fff;
+    text-decoration:none;
+    border-bottom:0px;
+}
+a.casebutton:hover span.btn-icon-right span{
+    opacity: 1;
+}
+a.casebutton:active {
+    position:relative;
+    top:1px;
+    background:#5d81ab;
+    border-color:#80a9da;
+}
