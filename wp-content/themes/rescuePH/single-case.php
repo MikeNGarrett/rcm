@@ -107,7 +107,7 @@ single-bookmarks.php
 									<?php } ?>
 
 
-									<? if($type[0]->slug == 'rescue') { ?>
+									<?php if($type[0]->slug == 'rescue') { ?>
 										<h1>Assistance Request Information</h1>
 										<?php if($name = get_field('name')) { ?>
 											<h2>Name</h2>
@@ -143,7 +143,8 @@ single-bookmarks.php
 											<div id="map-canvas"></div>
 										<?php } // End Rescue location ?>
 									<?php } // End check for rescue type ?>
-									<? if($type[0]->slug == 'tracing') { ?>
+									
+									<?php if($type[0]->slug == 'tracing') { ?>
 										<h1>Tracing Request Information</h1>
 										<?php if($tracing_name = get_field('tracing_name')) { ?>
 											<h2>Name of Missing Person</h2>
@@ -174,6 +175,7 @@ single-bookmarks.php
 											</script>
 											<div id="map-canvas"></div>
 										<?php } // End Tracing location ?>
+										
 										<?php if($tracing_information = get_field('tracing_information')) { ?>
 											<h2>Additional Information</h2>
 											<?php echo $tracing_information; ?>
