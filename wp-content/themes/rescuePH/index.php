@@ -14,6 +14,8 @@
 									<th>Priority</th>
 									<th>Status</th>
 									<th>Summary</th>
+									<th>Latitude</th>
+									<th>Longitude</th>
 									<th>Actions</th>
 								</tr>
 								</thead>
@@ -60,6 +62,12 @@
 								</td>
 								<td>
 										<?php the_field('summary'); ?>
+								</td>
+								<td>
+										<?php the_field('wp_gp_latitude'); ?>
+								</td>
+								<td>
+										<?php the_field('wp_gp_longitude'); ?>
 								</td>
 								<td>
 									<a class="" href="<?php the_permalink(); ?>" target="_blank" rel="nofollow">

@@ -61,6 +61,29 @@ single-bookmarks.php
 										<div class="status <?php echo $status[0]->slug; ?>">
 											<?php echo $status[0]->name; ?>
 										</div>
+										<div class="map" id="loc" style="height:200px; width:200px">
+										</div>
+										<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+											<script>
+											    var map;
+											    var myLatLang = new google.maps.LatLng( <?php the_field('wp_gp_latitude'); ?> , <?php the_field('wp_gp_longitude'); ?>);
+											    function initialize() {
+											        var mapOptions = {
+											            zoom: 6,
+											            center: myLatLang,
+											            mapTypeId: google.maps.MapTypeId.ROADMAP
+											        };
+											        map = new google.maps.Map(document.getElementById('loc'),
+											        mapOptions);
+											        var marker = new google.maps.Marker({
+											            position: myLatLang,
+											            map: map,
+											            title:"Rescue Location"
+											        });
+											    };
+											    google.maps.event.addDomListener(window, 'load', initialize);
+											</script>
+										
 									</div>
 								</section>
 
