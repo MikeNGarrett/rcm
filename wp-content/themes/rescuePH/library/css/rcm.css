@@ -27,6 +27,7 @@ a:hover, a:focus, a:visited:hover, a:visited:focus, a:active {
 #map-canvas {
 	height: 300px;
 }
+/*
 .rescue.low,
 table.dataTable tr.rescue.low{
 	background: rgba(218, 74, 82, 0.7);
@@ -59,14 +60,12 @@ table.dataTable tr.tracing.high{
 table.dataTable tr.tracing.urgent{
 	background: rgba(246, 195, 36, 1);
 }
+*/
+table.dataTable td {
+	padding: 0 10px !important;
+}
 .case {
-    -moz-border-radius: 10px/10px;
-    -webkit-border-radius: 10px 10px;
-    border-radius: 10px/10px;;
-    border:solid 10px #FFF;
 	background: #FFF;
-	margin: 15px 0;
-	padding: 15px;
 	position: relative;
 }
 .case-meta {
@@ -96,23 +95,25 @@ table.dataTable tr.tracing.urgent{
 	float: none !important;
 	padding: 0;
 }
-.case-details .status, .case-details .priority {
-	padding: 10px !important;
+.status, .priority {
+	padding: 10px;
 	background: #414141;
 	color: #FFF;
 	font-weight: bold;
 	font-size: 14px;
+	text-align: center;
+	line-height: 2;
 }
-.case-details .priority.low {
+.priority.low {
 	background: #414141;
 }
-.case-details .priority.normal {
+.priority.normal {
 	background: #005d87;
 }
-.case-details .priority.high {
+.priority.high {
 	background: #d79e00;
 }
-.case-details .priority.urgent {
+.priority.urgent {
 	background: #d70000;
 }
 
@@ -162,7 +163,7 @@ a.casebutton{
 	position: absolute;
 	top: 56px;
 	right: 0px;
-	float: none !important; 
+	float: none !important;
     padding-left:15px;
     padding-right:80px;
     margin: 0px;
