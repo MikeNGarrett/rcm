@@ -27,28 +27,36 @@ a:hover, a:focus, a:visited:hover, a:visited:focus, a:active {
 #map-canvas {
 	height: 300px;
 }
-.rescue.low{
+.rescue.low,
+table.dataTable tr.rescue.low{
 	background: rgba(218, 74, 82, 0.7);
 }
-.rescue.normal{
+.rescue.normal,
+table.dataTable tr.rescue.normal{
 	background: rgba(218, 74, 82, 0.8);
 }
-.rescue.high{
+.rescue.high,
+table.dataTable tr.rescue.high{
 	background: rgba(218, 74, 82, 0.9);
 }
-.rescue.urgent{
+.rescue.urgent,
+table.dataTable tr.rescue.urgent{
 	background: rgba(218, 74, 82, 1);
 }
-.tracing.low {
+.tracing.low,
+table.dataTable tr.tracing.low{
 	background: rgba(246, 195, 36, 0.7);
 }
-.tracing.normal {
+.tracing.normal,
+table.dataTable tr.tracing.normal{
 	background: rgba(246, 195, 36, 0.8);
 }
-.tracing.high {
+.tracing.high,
+table.dataTable tr.tracing.high{
 	background: rgba(246, 195, 36, 0.9);
 }
-.tracing.urgent {
+.tracing.urgent,
+table.dataTable tr.tracing.urgent{
 	background: rgba(246, 195, 36, 1);
 }
 .case {
