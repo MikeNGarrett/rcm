@@ -142,7 +142,7 @@ single-bookmarks.php
 											</script>
 											<div id="map-canvas"></div>
 										<?php } // End Rescue location ?>
-									<?php // End check for rescue type ?>
+									<?php } // End check for rescue type ?>
 									<? if($type[0]->slug == 'tracing') { ?>
 										<h1>Tracing Request Information</h1>
 										<?php if($tracing_name = get_field('tracing_name')) { ?>
@@ -178,7 +178,7 @@ single-bookmarks.php
 											<h2>Additional Information</h2>
 											<?php echo $tracing_information; ?>
 										<?php } ?>
-									<?php  // End check for tracing type ?>
+									<?php  } // End check for tracing type ?>
 
 									<h2>More details</h2>
 									<?php the_content(); ?>
