@@ -80,6 +80,27 @@ single-bookmarks.php
 											            map: map,
 											            title:"Rescue Location"
 											        });
+
+											        
+											        <?php
+											        ob_start();
+													$query = new WP_GeoQuery(array(
+													  'latitude' => get_post_meta( $near->ID, "wp_gp_latitude", true ), // Post's Latitude (optional)
+													  'longitude' => get_post_meta( $near->ID, "wp_gp_longitude", true ), // Post's Longitude (optional)
+													  'radius' => 50, // Radius to select for in miles (optional)
+													  'posts_per_page' => 50, // Any regular options available via WP_Query
+													)); 
+													$throwAway = ob_get_contents();
+													ob_end_clean();
+													$i =0; 
+													foreach($query->posts as $near) :?>
+													var marker<?php echo $i; ?> = new google.maps.Marker({
+														position: 	new google.maps.LatLng( <?php the_field('wp_gp_latitude') ?> , <?php the_field('wp_gp_longitude'); ?>),
+														map : map,
+														title: <?php echo '"'.$near->post_title.'"'; ?>
+													});
+													<?php $i=$i+1; ?>
+													<?php endforeach ?>
 											    };
 											    google.maps.event.addDomListener(window, 'load', initialize);
 											</script>
