@@ -58,6 +58,7 @@ single-bookmarks.php
 										</div>
 
 										<?php $status = get_field('status'); ?>
+										<?php $t = get_the_title(); ?>
 										<div class="status <?php echo $status[0]->slug; ?>">
 											<?php echo $status[0]->name; ?>
 										</div>
@@ -78,15 +79,15 @@ single-bookmarks.php
 											        var marker = new google.maps.Marker({
 											            position: myLatLang,
 											            map: map,
-											            title:"Rescue Location"
+											            title: <?php echo '"'.$t.'"'?>
 											        });
 
 											        
 											        <?php
 											        ob_start();
 													$query = new WP_GeoQuery(array(
-													  'latitude' => get_post_meta( $near->ID, "wp_gp_latitude", true ), // Post's Latitude (optional)
-													  'longitude' => get_post_meta( $near->ID, "wp_gp_longitude", true ), // Post's Longitude (optional)
+													  'latitude' => the_field('wp_gp_latitude'), // Post's Latitude (optional)
+													  'longitude' => the_field('wp_gp_longitude'),// Post's Longitude (optional)
 													  'radius' => 50, // Radius to select for in miles (optional)
 													  'posts_per_page' => 50, // Any regular options available via WP_Query
 													)); 
@@ -94,14 +95,17 @@ single-bookmarks.php
 													ob_end_clean();
 													$i =0; 
 													foreach($query->posts as $near) :?>
-													var marker<?php echo $i; ?> = new google.maps.Marker({
-														position: 	new google.maps.LatLng( <?php the_field('wp_gp_latitude') ?> , <?php the_field('wp_gp_longitude'); ?>),
+													<?php if(get_post_meta( $near->ID, "wp_gp_latitude", true ) && $near->post_title != $t) :?>
+								var marker<?php echo $i; ?> = new google.maps.Marker({
+														position: 	new google.maps.LatLng( <?php  echo get_post_meta( $near->ID, "wp_gp_latitude", true )?> , <?php echo get_post_meta( $near->ID, "wp_gp_longitude", true ); ?>),
 														map : map,
 														title: <?php echo '"'.$near->post_title.'"'; ?>
 													});
 													<?php $i=$i+1; ?>
+													<?php endif ?>
 													<?php endforeach ?>
 											    };
+
 											    google.maps.event.addDomListener(window, 'load', initialize);
 											</script>
 										
