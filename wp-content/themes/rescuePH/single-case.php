@@ -11,6 +11,7 @@ then your single template should be
 single-bookmarks.php
 
 */
+$coords = '0,0';
 ?>
 
 <?php get_header(); ?>
@@ -58,57 +59,9 @@ single-bookmarks.php
 										</div>
 
 										<?php $status = get_field('status'); ?>
-										<?php $t = get_the_title(); ?>
 										<div class="status <?php echo $status[0]->slug; ?>">
 											<?php echo $status[0]->name; ?>
 										</div>
-										<div class="map" id="loc" style="height:200px; width:200px">
-										</div>
-										<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-											<script>
-											    var map;
-											    var myLatLang = new google.maps.LatLng( <?php the_field('wp_gp_latitude'); ?> , <?php the_field('wp_gp_longitude'); ?>);
-											    function initialize() {
-											        var mapOptions = {
-											            zoom: 6,
-											            center: myLatLang,
-											            mapTypeId: google.maps.MapTypeId.ROADMAP
-											        };
-											        map = new google.maps.Map(document.getElementById('loc'),
-											        mapOptions);
-											        var marker = new google.maps.Marker({
-											            position: myLatLang,
-											            map: map,
-											            title: <?php echo '"'.$t.'"'?>
-											        });
-
-											        
-											        <?php
-											        ob_start();
-													$query = new WP_GeoQuery(array(
-													  'latitude' => the_field('wp_gp_latitude'), // Post's Latitude (optional)
-													  'longitude' => the_field('wp_gp_longitude'),// Post's Longitude (optional)
-													  'radius' => 50, // Radius to select for in miles (optional)
-													  'posts_per_page' => 50, // Any regular options available via WP_Query
-													)); 
-													$throwAway = ob_get_contents();
-													ob_end_clean();
-													$i =0; 
-													foreach($query->posts as $near) :?>
-													<?php if(get_post_meta( $near->ID, "wp_gp_latitude", true ) && $near->post_title != $t) :?>
-								var marker<?php echo $i; ?> = new google.maps.Marker({
-														position: 	new google.maps.LatLng( <?php  echo get_post_meta( $near->ID, "wp_gp_latitude", true )?> , <?php echo get_post_meta( $near->ID, "wp_gp_longitude", true ); ?>),
-														map : map,
-														title: <?php echo '"'.$near->post_title.'"'; ?>
-													});
-													<?php $i=$i+1; ?>
-													<?php endif ?>
-													<?php endforeach ?>
-											    };
-
-											    google.maps.event.addDomListener(window, 'load', initialize);
-											</script>
-										
 									</div>
 								</section>
 
@@ -156,7 +109,7 @@ single-bookmarks.php
 
 
 									<?php if($type[0]->slug == 'rescue') { ?>
-										<h1>Assistance Request Information</h1>
+										<h1>Rescue Request Information</h1>
 										<?php if($name = get_field('name')) { ?>
 											<h2>Name</h2>
 											<?php echo $name; ?>
@@ -165,9 +118,13 @@ single-bookmarks.php
 											<h2>Contact Information</h2>
 											<?php echo $contact; ?>
 										<?php } ?>
-										<?php if($rescue_location = get_field('request_location')) { ?>
+										<?php if($rescue_location = get_field('rescue_location')) {
+												print_r($rescue_location);
+												$coords = $rescue_location['coordinates'];
+										?>
 											<h2>Location</h2>
 											<?php echo $rescue_location['address']; ?>
+<?php /*
 											<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 											<script>
 											    var map;
@@ -189,18 +146,23 @@ single-bookmarks.php
 											    google.maps.event.addDomListener(window, 'load', initialize);
 											</script>
 											<div id="map-canvas"></div>
+*/ ?>
 										<?php } // End Rescue location ?>
 									<?php } // End check for rescue type ?>
-									
+
 									<?php if($type[0]->slug == 'tracing') { ?>
 										<h1>Tracing Request Information</h1>
 										<?php if($tracing_name = get_field('tracing_name')) { ?>
 											<h2>Name of Missing Person</h2>
 											<?php echo $tracing_name; ?>
 										<?php } ?>
-										<?php if($tracing_location = get_field('tracing_location')) { ?>
+										<?php if($tracing_location = get_field('tracing_location')) {
+												print_r($tracing_location);
+												$coords = $tracing_location['coordinates'];
+										?>
 											<h2>Last Seen</h2>
 											<?php echo $tracing_location['address']; ?>
+<?php /*
 											<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 											<script>
 											    var map;
@@ -222,8 +184,9 @@ single-bookmarks.php
 											    google.maps.event.addDomListener(window, 'load', initialize);
 											</script>
 											<div id="map-canvas"></div>
+*/ ?>
 										<?php } // End Tracing location ?>
-										
+
 										<?php if($tracing_information = get_field('tracing_information')) { ?>
 											<h2>Additional Information</h2>
 											<?php echo $tracing_information; ?>
@@ -233,6 +196,64 @@ single-bookmarks.php
 									<h2>More details</h2>
 									<?php the_content(); ?>
 									</div>
+
+
+
+
+										<?php $t = get_the_title(); ?>
+										<div class="map" id="loc" style="height:200px; width:200px">
+										</div>
+										<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+											<script>
+											    var map;
+											    var myLatLang = new google.maps.LatLng( <?php $coords; ?>);
+											    function initialize() {
+											        var mapOptions = {
+											            zoom: 6,
+											            center: myLatLang,
+											            mapTypeId: google.maps.MapTypeId.ROADMAP
+											        };
+											        map = new google.maps.Map(document.getElementById('loc'),
+											        mapOptions);
+											        var marker = new google.maps.Marker({
+											            position: myLatLang,
+											            map: map,
+											            title: <?php echo '"'.$t.'"'?>
+											        });
+
+
+											        <?php
+											        $split = explode(',', $coords);
+													$query = new WP_GeoQuery(array(
+													  'latitude' => $split[0], // Post's Latitude (optional)
+													  'longitude' => $split[1],// Post's Longitude (optional)
+													  'radius' => 50, // Radius to select for in miles (optional)
+													  'posts_per_page' => 50, // Any regular options available via WP_Query
+													));
+													$i =0;
+													print_r($query);
+													die;
+													foreach($query->posts as $near) :?>
+													<?php if(get_post_meta( $near->ID, "wp_gp_latitude", true ) && $near->post_title != $t) :?>
+								var marker<?php echo $i; ?> = new google.maps.Marker({
+														position: 	new google.maps.LatLng( <?php  echo get_post_meta( $near->ID, "wp_gp_latitude", true )?> , <?php echo get_post_meta( $near->ID, "wp_gp_longitude", true ); ?>),
+														map : map,
+														title: <?php echo '"'.$near->post_title.'"'; ?>
+													});
+													<?php $i=$i+1; ?>
+													<?php endif ?>
+													<?php endforeach ?>
+											    };
+
+											    google.maps.event.addDomListener(window, 'load', initialize);
+											</script>
+
+
+
+
+
+
+
 								</section>
 
 								<footer class="article-footer">
@@ -264,7 +285,7 @@ single-bookmarks.php
 
 						</div>
 
-						<!-- Removed Sidebar	<?php get_sidebar(); ?> -->
+						<?php //get_sidebar(); ?>
 
 				</div>
 
