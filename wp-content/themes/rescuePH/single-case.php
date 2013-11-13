@@ -68,6 +68,16 @@ single-bookmarks.php
 											<script>
 											    var map;
 											    var myLatLang = new google.maps.LatLng( <?php the_field('wp_gp_latitude'); ?> , <?php the_field('wp_gp_longitude'); ?>);
+											    var myPinColor = "FE7569";
+												var nearbyPinColor = "FEB869";
+
+											    function getIcon(pinColor) {
+											    	return new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+											            new google.maps.Size(21, 34),
+											            new google.maps.Point(0,0),
+											            new google.maps.Point(10, 34));
+											    }
+
 											    function initialize() {
 											        var mapOptions = {
 											            zoom: 6,
@@ -76,12 +86,13 @@ single-bookmarks.php
 											        };
 											        map = new google.maps.Map(document.getElementById('loc'),
 											        mapOptions);
+											        
 											        var marker = new google.maps.Marker({
 											            position: myLatLang,
 											            map: map,
-											            title: <?php echo '"'.$t.'"'?>
+											            icon: getIcon(myPinColor),
+											            title: <?php echo '"'.$t.'"'?>,
 											        });
-
 											        
 											        <?php
 											        ob_start();
@@ -93,12 +104,16 @@ single-bookmarks.php
 													)); 
 													$throwAway = ob_get_contents();
 													ob_end_clean();
+													?>
+													var nearbyIcon = getIcon(nearbyPinColor);
+													<?php 
 													$i =0; 
 													foreach($query->posts as $near) :?>
 													<?php if(get_post_meta( $near->ID, "wp_gp_latitude", true ) && $near->post_title != $t) :?>
 								var marker<?php echo $i; ?> = new google.maps.Marker({
 														position: 	new google.maps.LatLng( <?php  echo get_post_meta( $near->ID, "wp_gp_latitude", true )?> , <?php echo get_post_meta( $near->ID, "wp_gp_longitude", true ); ?>),
 														map : map,
+														icon: nearbyIcon,
 														title: <?php echo '"'.$near->post_title.'"'; ?>
 													});
 													<?php $i=$i+1; ?>
