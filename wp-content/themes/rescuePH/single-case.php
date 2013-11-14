@@ -107,79 +107,79 @@ single-bookmarks.php
 									<?php } ?>
 
 
-									<? if($type[0]->slug == 'rescue') { ?>
-										<h1>Assistance Request Information</h1>
-										<?php if($name = get_field('name')) { ?>
-											<h2>Name</h2>
-											<?php echo $name; ?>
-										<?php } ?>
-										<?php if($contact = get_field('contact')) { ?>
-											<h2>Contact Information</h2>
-											<?php echo $contact; ?>
-										<?php } ?>
-										<?php if($rescue_location = get_field('request_location')) { ?>
-											<h2>Location</h2>
-											<?php echo $rescue_location['address']; ?>
-											<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-											<script>
-											    var map;
-											    var myLatLang = new google.maps.LatLng( <?php echo $rescue_location['coordinates']; ?>);
-											    function initialize() {
-											        var mapOptions = {
-											            zoom: 6,
-											            center: myLatLang,
-											            mapTypeId: google.maps.MapTypeId.ROADMAP
-											        };
-											        map = new google.maps.Map(document.getElementById('map-canvas'),
-											        mapOptions);
-											        var marker = new google.maps.Marker({
-											            position: myLatLang,
-											            map: map,
-											            title:"Rescue Location"
-											        });
-											    };
-											    google.maps.event.addDomListener(window, 'load', initialize);
-											</script>
-											<div id="map-canvas"></div>
-										<?php } // End Rescue location ?>
-									<?php } // End check for rescue type ?>
-									<? if($type[0]->slug == 'tracing') { ?>
-										<h1>Tracing Request Information</h1>
-										<?php if($tracing_name = get_field('tracing_name')) { ?>
-											<h2>Name of Missing Person</h2>
-											<?php echo $tracing_name; ?>
-										<?php } ?>
-										<?php if($tracing_location = get_field('tracing_location')) { ?>
-											<h2>Last Seen</h2>
-											<?php echo $tracing_location['address']; ?>
-											<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-											<script>
-											    var map;
-											    var myLatLang = new google.maps.LatLng( <?php echo $tracing_location['coordinates']; ?>);
-											    function initialize() {
-											        var mapOptions = {
-											            zoom: 6,
-											            center: myLatLang,
-											            mapTypeId: google.maps.MapTypeId.ROADMAP
-											        };
-											        map = new google.maps.Map(document.getElementById('map-canvas'),
-											        mapOptions);
-											        var marker = new google.maps.Marker({
-											            position: myLatLang,
-											            map: map,
-											            title:"Last Seen Location"
-											        });
-											    };
-											    google.maps.event.addDomListener(window, 'load', initialize);
-											</script>
-											<div id="map-canvas"></div>
-										<?php } // End Tracing location ?>
-										<?php if($tracing_information = get_field('tracing_information')) { ?>
-											<h2>Additional Information</h2>
-											<?php echo $tracing_information; ?>
-										<?php } ?>
-									<?php  } // End check for tracing type ?>
 
+                                        <? if($type[0]->slug == 'rescue') { ?>
+                                            <h1>Assistance Request Information</h1>
+                                            <?php if($name = get_field('name')) { ?>
+                                                <h2>Name</h2>
+                                                <?php echo $name; ?>
+                                            <?php } ?>
+                                            <?php if($contact = get_field('contact')) { ?>
+                                                <h2>Contact Information</h2>
+                                                <?php echo $contact; ?>
+                                            <?php } ?>
+                                            <?php if($rescue_location = get_field('request_location')) { ?>
+                                                <h2>Location</h2>
+                                                <?php echo $rescue_location['address']; ?>
+                                                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+                                                <script>
+                                                    var map;
+                                                    var myLatLang = new google.maps.LatLng( <?php echo $rescue_location['coordinates']; ?>);
+                                                    function initialize() {
+                                                        var mapOptions = {
+                                                            zoom: 6,
+                                                            center: myLatLang,
+                                                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                                                        };
+                                                        map = new google.maps.Map(document.getElementById('map-canvas'),
+                                                            mapOptions);
+                                                        var marker = new google.maps.Marker({
+                                                            position: myLatLang,
+                                                            map: map,
+                                                            title:"Rescue Location"
+                                                        });
+                                                    };
+                                                    google.maps.event.addDomListener(window, 'load', initialize);
+                                                </script>
+                                                <div id="map-canvas"></div>
+                                            <?php } // End Rescue location ?>
+                                        <?php } // End check for rescue type ?>
+                                        <? if($type[0]->slug == 'tracing') { ?>
+                                            <h1>Tracing Request Information</h1>
+                                            <?php if($tracing_name = get_field('tracing_name')) { ?>
+                                                <h2>Name of Missing Person</h2>
+                                                <?php echo $tracing_name; ?>
+                                            <?php } ?>
+                                            <?php if($tracing_location = get_field('tracing_location')) { ?>
+                                                <h2>Last Seen</h2>
+                                                <?php echo $tracing_location['address']; ?>
+                                                <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+                                                <script>
+                                                    var map;
+                                                    var myLatLang = new google.maps.LatLng( <?php echo $tracing_location['coordinates']; ?>);
+                                                    function initialize() {
+                                                        var mapOptions = {
+                                                            zoom: 6,
+                                                            center: myLatLang,
+                                                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                                                        };
+                                                        map = new google.maps.Map(document.getElementById('map-canvas'),
+                                                            mapOptions);
+                                                        var marker = new google.maps.Marker({
+                                                            position: myLatLang,
+                                                            map: map,
+                                                            title:"Last Seen Location"
+                                                        });
+                                                    };
+                                                    google.maps.event.addDomListener(window, 'load', initialize);
+                                                </script>
+                                                <div id="map-canvas"></div>
+                                            <?php } // End Tracing location ?>
+                                            <?php if($tracing_information = get_field('tracing_information')) { ?>
+                                                <h2>Additional Information</h2>
+                                                <?php echo $tracing_information; ?>
+                                            <?php } ?>
+                                        <?php  } // End check for tracing type ?>
 									<h2>More details</h2>
 									<?php the_content(); ?>
 									</div>

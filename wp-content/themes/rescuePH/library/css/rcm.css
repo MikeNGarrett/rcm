@@ -225,3 +225,51 @@ a.casebutton:active {
     background:#5d81ab;
     border-color:#80a9da;
 }
+
+.faceted-search-div
+{
+    background: #ccc;
+}
+
+.faceted-search-div form#faceted-search
+{
+    margin: 20px;
+}
+
+form#faceted-search p
+{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+form#faceted-search p label
+{
+    margin-right: 5px;
+}
+
+form#faceted-search input
+{
+    height: 30px;
+}
+
+form#faceted-search select
+{
+    height: 30px;
+}
+
+form#faceted-search .facetious_submit_button
+{
+    border: 0;
+    background-color: #d70000;
+    border-top: 1px solid #ec4b4c;
+    border-left: 1px solid #ec4b4c;
+    border-bottom: 1px solid #9d0000;
+    border-right: 1px solid #9d0000;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #fff;
+    height: 30px;
+    padding: 3px 10px;
+}
