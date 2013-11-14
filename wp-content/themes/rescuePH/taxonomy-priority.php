@@ -23,50 +23,57 @@ taxonomy-shoes.php
 
 							<h1 class="archive-title h2"><span><?php _e( 'Cases with', 'bonestheme' ); ?></span> <?php single_cat_title(); ?> <span>Priority</span></h1>
 
-							<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+							<table id="caseTable">
+								<thead>
+									<tr>
+										<th>Type</th>
+										<th>Name</th>
+										<th>Date</th>
+										<th>Case Status</th>
+										<th>Summary</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+									<tr>
+										<td>
+											<?php
+											$type = get_field('type');
+											echo $type[0]->name;
+											?>
+										</td>
+										<td>
+											<?php
+											if($type[0]->slug == 'rescue') {
+												the_field('name');
+											}
+											if($type[0]->slug == 'tracing') {
+												the_field('tracing_name');
+											}
+											?>
+										</td>
+										<td>
+											<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
+										</td>
+										<td>
+											<?php $priority = get_field('priority'); ?>
+											<div class="priority <?php echo $priority[0]->slug; ?>">
+												<?php echo $priority[0]->name; ?>
+											</div>
 
-							<article class="case clearfix">
-								<header class="case-meta">
-									<div class="type">
-										<?php
-										$type = get_field('type');
-										echo $type[0]->name;
-										?>
-									</div>
-								</header>
-								<section class="case-details">
-									<div class="name">
-										<strong>
-										<?php
-										if($type[0]->slug == 'rescue') {
-											the_field('name');
-										}
-										if($type[0]->slug == 'tracing') {
-											the_field('tracing_name');
-										}
-										?>
-										</strong>
-									</div>
-									<div class="date">
-										<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
-									</div>
-									<div class="case-status">
-										<?php $priority = get_field('priority'); ?>
-										<div class="priority <?php echo $priority[0]->slug; ?>">
-											<?php echo $priority[0]->name; ?>
-										</div>
-
-										<?php $status = get_field('status'); ?>
-										<div class="status <?php echo $status[0]->slug; ?>">
-											<?php echo $status[0]->name; ?>
-										</div>
-									</div>
-									<div class="summary">
-										<?php the_field('summary'); ?>
-										<a href="<?php the_permalink(); ?>">View Case &raquo;</a>
-									</div>
-								</section>
-							</article>
+											<?php $status = get_field('status'); ?>
+											<div class="status <?php echo $status[0]->slug; ?>">
+												<?php echo $status[0]->name; ?>
+											</div>
+										</td>
+										<td>
+											<?php the_field('summary'); ?>
+											<a href="<?php the_permalink(); ?>">View Case &raquo;</a>
+										</td>
+									</tr>
+									<?php endwhile; ?>
+								</tbody>
+							</table>
 
 <?php /*
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix' ); ?> role="article">
@@ -91,8 +98,6 @@ taxonomy-shoes.php
 
 							</article>
 */ ?>
-
-							<?php endwhile; ?>
 
 									<?php if ( function_exists( 'bones_page_navi' ) ) { ?>
 											<?php bones_page_navi(); ?>
