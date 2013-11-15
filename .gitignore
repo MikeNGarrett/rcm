@@ -55,3 +55,4 @@ temp/
 .svn
 
 wp-config.php
+.htaccess
