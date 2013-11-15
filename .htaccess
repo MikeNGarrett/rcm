@@ -10,3 +10,24 @@ RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
+
+
+# ------------------
+# Page Speed Optimizations
+# ------------------
+
+# Gzipper
+<ifmodule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript text/javascript
+</ifmodule>
+
+# Set Expires, Turn off Etags.
+<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|js|css)(\.gz)?$">
+    # Wait til we're live to add this ...
+    #Header set Expires "Sun, 17 Nov 2013 20:00:00 GMT"
+
+    Header unset Pragma
+    FileETag None
+    Header unset ETag
+</FilesMatch>
+
