@@ -11,6 +11,9 @@ Hipchat: https://www.hipchat.com/gBniKYEB9
 1. There's a wp-config-sample file. Use it. Make sure you read the comments.
 1. Once you get everything set up the __first__ thing you need to do is login via /wp-login.php __then__ go comment out the line in wp-config.php that's sets RELOCATE to true.
 1. Username/password for this sql dump is master/changeme. Don't worry. It's changed on the live site.
+1. If your local install path is not the doc root, then you may need to update .htaccess:
+    - RewriteBase /path/to/rcmrepo/
+    - RewriteRule . index.php [L]
 1. Live site is on http://sagip.me/
 
 
