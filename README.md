@@ -3,6 +3,8 @@ Rescue Case Management
 
 Provide a way for volunteers to create and update rescue cases.
 
+Hipchat: https://www.hipchat.com/gBniKYEB9
+
 
 ## To get started
 1. There's an sql dump in the root. Use it. 
@@ -19,7 +21,7 @@ Want to be a contributor on this project?
 
 __Anything. Contact me.__
 
-@mikengarrett or mgarrett@webdevelopmentgroup.com
+https://www.hipchat.com/gBniKYEB9 or @mikengarrett or mgarrett@webdevelopmentgroup.com 
 
 
 ## Other resources
