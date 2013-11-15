@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
-			<div id="content">
+			<div id="content" class="row">
 
-				<div id="inner-content" class="wrap clearfix">
+				<div id="inner-content" class="col-md-12">
 
 						<div id="main" class="twelvecol first clearfix" role="main">
 							<table id="caseTable">
@@ -48,13 +48,13 @@
 								</td>
 								<td>
 										<?php $priority = get_field('priority'); ?>
-										<div class="priority <?php echo $priority[0]->slug; ?>">
+										<div class="priority <?php echo $priority[0]->slug; ?> sprdsht">
 											<?php echo $priority[0]->name; ?>
 										</div>
 								</td>
 								<td>
 										<?php $status = get_field('status'); ?>
-										<div class="status <?php echo $status[0]->slug; ?>">
+										<div class="status <?php echo $status[0]->slug; ?> sprdsht">
 											<?php echo $status[0]->name; ?>
 										</div>
 								</td>
@@ -131,6 +131,9 @@
 						<?php //get_sidebar(); ?>
 
 				</div>
+                <!--<div class="col-md-3">
+                    <?php /*get_sidebar(); */?>
+                </div>-->
 
 			</div>
 

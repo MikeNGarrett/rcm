@@ -20,9 +20,9 @@
 
 		<?php // icons & favicons (for more: http://www.jonathantneal.com/blog/understand-the-favicon/) ?>
 		<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/library/images/apple-icon-touch.png">
-		<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/favicon.png">
+		<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/favicon.png?3">
 		<!--[if IE]>
-			<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
+			<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico?3">
 		<![endif]-->
 		<?php // or, set /favicon.ico for IE10 win ?>
 		<meta name="msapplication-TileColor" content="#f01d4f">
@@ -40,25 +40,30 @@
 	</head>
 
 	<body <?php body_class(); ?>>
+<div id="wrap">
 
-		<div id="container">
+    <header class="container">
+    <h1 class="logo"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></h1>
+    </header>
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
 
-			<header class="header" role="banner">
-					
-					<nav role="navigation" class="nav">
-					<div class="nav wrap clearfix">
-						<?php bones_main_nav(); ?>
-					</div>
-					</nav>
-					
-				<div id="inner-header" class="wrap clearfix">
-				
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="container">
+            <?php bones_main_nav(); ?>
+            </div>
+        </div><!-- /.navbar-collapse -->
+    </nav>
 
-					<?php // to use a image just replace the bloginfo('name') with your img src and remove the surrounding <p> ?>
-					<p id="logo" class="h1"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></p>
 
-					<?php // if you'd like to use the site description you can un-comment it below ?>
-					<?php // bloginfo('description'); ?>
-				</div>
+    <div id="container" class="container">
 
-			</header>
