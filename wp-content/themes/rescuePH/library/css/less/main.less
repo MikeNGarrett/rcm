@@ -1,0 +1,96 @@
+h1.logo {
+  margin-left:10px;
+  padding:0 0 0 45px;
+  background: url('../images/ocha/telecommunications_internet_40px.png') no-repeat left center;
+  font-family: @font-family-serif;
+}
+
+.status, .priority {
+  padding: 10px;
+  background: #414141;
+  color: #000;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  line-height: 2;
+  min-width: 100px;
+  width: 100%;
+  margin: 5px;
+  border:1px solid #4a3a42;
+  font-family:@font-family-sans-serif;
+  border-radius: @border-radius-base;
+}
+.priority.low {
+  background: #414141;
+}
+.priority.normal {
+  background: #0f6cb6;
+}
+.priority.high {
+  background: #e4ff2a;
+}
+.priority.urgent {
+  background: #a60006;
+}
+
+
+.status.on-hold {
+  background: #a9a9a4;
+}
+.status.new-case {
+  background: #005d87;
+}
+.status.help-on-the-way {
+  background: #530078;
+}
+.status.closed {
+  background: #a9a9a4;
+}
+.status.active {
+  background: #13ff0d;
+}
+
+.status.sprdsht, .priority.sprdsht {
+  min-width: 100px;
+  width: 100%;
+  padding: 2px;
+  margin: 2px;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+  height: 60px;
+}
+#footer {
+  background-color: #f5f5f5;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
