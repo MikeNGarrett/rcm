@@ -125,6 +125,10 @@ table.dataTable td {
 }
 
 #main-nav li ul.sub-menu li a, #main-nav li ul.children li a {
+background: #EC2525;
+}
+#main-nav li ul.sub-menu li a:hover, #main-nav li ul.sub-menu li a:focus, #main-nav li ul.children li a:hover, #main-nav li ul.children li a:focus {
+	background: #FF3737;
 }
 .header{
 	background: #FFF;
