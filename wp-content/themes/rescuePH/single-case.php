@@ -62,21 +62,21 @@ single-bookmarks.php
 										<div class="status <?php echo $status[0]->slug; ?>">
 											<?php echo $status[0]->name; ?>
 										</div>
-										<div class="map" id="loc" style="height:200px; width:200px">
+										<div class="map" id="loc" style="height:400px; width:400px">
 										</div>
 										<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 											<script>
+												function createPinIcon(pinColor) {
+													return new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+												        new google.maps.Size(21, 34),
+												        new google.maps.Point(0,0),
+												        new google.maps.Point(10, 34));
+												}
+
 											    var map;
 											    var myLatLang = new google.maps.LatLng( <?php the_field('wp_gp_latitude'); ?> , <?php the_field('wp_gp_longitude'); ?>);
 											    var myPinColor = "FE7569";
 												var nearbyPinColor = "FEB869";
-
-											    function getIcon(pinColor) {
-											    	return new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-											            new google.maps.Size(21, 34),
-											            new google.maps.Point(0,0),
-											            new google.maps.Point(10, 34));
-											    }
 
 											    function initialize() {
 											        var mapOptions = {
@@ -86,13 +86,28 @@ single-bookmarks.php
 											        };
 											        map = new google.maps.Map(document.getElementById('loc'),
 											        mapOptions);
+
+											        var infoWindow = new google.maps.InfoWindow({
+														maxWidth: 200
+													});
 											        
 											        var marker = new google.maps.Marker({
 											            position: myLatLang,
 											            map: map,
-											            icon: getIcon(myPinColor),
+											            icon: createPinIcon(myPinColor),
 											            title: <?php echo '"'.$t.'"'?>,
 											        });
+											        <?php
+											        $infoContent = "<div class='infoWindow'><h1>" . get_the_title() . '</h1>';
+											        if ($summary) {
+											        	$infoContent .= "<div>{$summary}</div>";
+											        }
+											        $infoContent .= '</div>';
+													?>
+									                google.maps.event.addListener(marker, 'click', function() {
+									                	infoWindow.setContent("<?php echo $infoContent ?>");
+									                	infoWindow.open(map,this);
+									        		});
 											        
 											        <?php
 											        ob_start();
@@ -105,25 +120,50 @@ single-bookmarks.php
 													$throwAway = ob_get_contents();
 													ob_end_clean();
 													?>
-													var nearbyIcon = getIcon(nearbyPinColor);
+													var nearbyIcon = createPinIcon(nearbyPinColor);
 													<?php 
 													$i =0; 
+													$infoContent = array();
 													foreach($query->posts as $near) :?>
+													
 													<?php if(get_post_meta( $near->ID, "wp_gp_latitude", true ) && $near->post_title != $t) :?>
-								var marker<?php echo $i; ?> = new google.maps.Marker({
-														position: 	new google.maps.LatLng( <?php  echo get_post_meta( $near->ID, "wp_gp_latitude", true )?> , <?php echo get_post_meta( $near->ID, "wp_gp_longitude", true ); ?>),
-														map : map,
-														icon: nearbyIcon,
-														title: <?php echo '"'.$near->post_title.'"'; ?>
-													});
+														<?php
+														$permalink = get_permalink($near->ID);
+														$customFields = get_post_custom($near->ID);
+														$infoContent[$i] = "<div class='infoWindow'><h1><a href='$permalink'>{$near->post_title}</a></h1>";
+														if (isset($customFields['summary'][0])) {
+															$infoContent[$i] .= '<div>' . $customFields['summary'][0] . '</div>';
+														}
+														$infoContent[$i] .= '</div>';
+														?>
+														var marker<?php echo $i; ?> = new google.maps.Marker({
+															position: 	new google.maps.LatLng( <?php  echo get_post_meta( $near->ID, "wp_gp_latitude", true )?> , <?php echo get_post_meta( $near->ID, "wp_gp_longitude", true ); ?>),
+															map : map,
+															icon: nearbyIcon,
+															title: <?php echo '"'.$near->post_title.'"'; ?>
+														});
+
+												        google.maps.event.addListener(marker<?php echo $i; ?>, 'click', function() {
+												        	infoWindow.setContent("<?php echo $infoContent[$i] ?>");
+												        	infoWindow.open(map,this);
+														});
 													<?php $i=$i+1; ?>
 													<?php endif ?>
 													<?php endforeach ?>
 											    };
 
 											    google.maps.event.addDomListener(window, 'load', initialize);
+
 											</script>
-										
+
+											<?php
+											// foreach ($query->posts as $post) {
+											// 	var_dump(get_post_custom($post->ID));
+											// }
+											// var_dump($query->posts);
+											// var_dumpget_post_custom
+											// die;
+											#?>
 									</div>
 								</section>
 
