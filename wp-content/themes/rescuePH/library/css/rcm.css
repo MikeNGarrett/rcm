@@ -222,3 +222,17 @@ a.casebutton:active {
     background:#5d81ab;
     border-color:#80a9da;
 }
+
+.map div {
+	padding: 0;
+}
+.infoWindow {
+	width: auto;
+	min-height: 50px;
+	padding: 0px !important;
+}
+
+.infoWindow h1 {
+	margin: 0px 0px 5px 0px;
+	font-size: 12px;
+}
