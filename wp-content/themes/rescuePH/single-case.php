@@ -50,7 +50,7 @@ single-bookmarks.php
 
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h1><?php the_title(); ?></h1>
+                                        <h1>Case ID: SME<?php the_ID(); ?></h1>
                                     </div>
                                     <div class="panel-body">
                                         <!--<h1><?php /*the_title(); */?></h1>-->
