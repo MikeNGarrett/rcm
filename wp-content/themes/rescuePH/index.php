@@ -20,6 +20,7 @@
 					<tbody>
 						<?php
 						$q = new WP_Query( array('post_type' => 'case') );
+						$statusOptions = get_terms('status', 'orderby=term&hide_empty=0');
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
 							$type = get_field('type');
 							$priority = get_field('priority');
@@ -30,9 +31,29 @@
 								<td>
 									<?php echo $type[0]->name; ?>
 								</td>
-								<td class="status <?php echo $status[0]->slug; ?> sprdsht">
-									<?php echo $status[0]->name; ?>
-								</td>
+								
+								<?php 
+								if (!is_user_logged_in()) {
+									// show status as text
+									$statusClass = $status[0]->slug;
+									$statusContent = $status[0]->name;
+								} else {
+									// show status as dropdown
+									$statusClass = '';
+									$statusContent = "<select name='status' id='status_" . get_the_id() . "'>";
+									foreach ($statusOptions as $statusOption) {
+										$statusContent .= "<option value='{$statusOption->term_taxonomy_id}'";
+										if ($status[0]->term_taxonomy_id == $statusOption->term_taxonomy_id) {
+											$statusContent .= " selected='selected' ";
+										}
+										$statusContent .= ">{$statusOption->name}</option>";
+									}
+									$statusContent .= "</select>";
+								}
+								?>
+								<td class="status sprdsht <?=$statusClass?>">
+									<?=$statusContent?>
+								</td>		
 								<td>
 									<?php
 									if($type[0]->slug == 'rescue') {
