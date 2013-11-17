@@ -1,6 +1,9 @@
-			<footer class="footer" role="contentinfo">
 
-				<div id="inner-footer" class="wrap clearfix">
+<div id="push"></div>
+</div>
+<footer class="footer" role="contentinfo">
+
+				<div id="inner-footer" class="container">
 
 					<nav role="navigation">
 							<?php bones_footer_links(); ?>
@@ -32,6 +35,7 @@
 		  $('#caseTable').dataTable();
 		});
 		</script>
+            </div>
 	</body>
 
 </html>
