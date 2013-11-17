@@ -565,4 +565,37 @@ function bones_wpsearch($form) {
 } // don't remove this bracket!
 
 
+/************* POST STATUS AJAX  *****************/
+add_action('wp_enqueue_scripts', 'updatePostStatusScripts');
+add_action("wp_ajax_nopriv_updatePostStatus", "postStatusNoAction");  
+add_action("wp_ajax_updatePostStatus", "updatePostStatus");
+
+function updatePostStatusScripts() {
+	wp_enqueue_script('update-post-status', get_template_directory_uri().'/library/js/update-post-status.js', array('jquery'));
+	wp_localize_script('update-post-status', 'PT_Ajax', array(
+		'ajaxUrl' 	=> admin_url('admin-ajax.php'),
+		'nextNonce' => wp_create_nonce('update_status_nonce'),
+	));
+}
+
+function updatePostStatus() {
+	if (empty($_POST['nextNonce']) 
+		|| empty($_POST['postId'])
+		|| empty($_POST['statusId'])
+		|| !wp_verify_nonce($_POST['nextNonce'], 'update_status_nonce')) { 
+		die;
+	}
+	$post = get_post($_POST['postId']);
+	wp_set_post_terms($_POST['postId'], array($_POST['statusId']), 'status', false);
+	die('ok');
+}
+
+/*
+ * If users are not logged-in, they shouldn't be able to modify the status.
+ * The link won't be in the front-end, but someone might try to be clever.
+ */
+function postStatusNoAction() {
+	return;
+}
+
 ?>

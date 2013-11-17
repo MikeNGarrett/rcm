@@ -20,7 +20,7 @@
 					<tbody>
 						<?php
 						$q = new WP_Query( array('post_type' => 'case') );
-						$statusOptions = get_terms('status', 'orderby=term&hide_empty=0');
+						$statusOptions = get_terms('status', 'hide_empty=0');
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
 							$type = get_field('type');
 							$priority = get_field('priority');
@@ -42,8 +42,8 @@
 									$statusClass = '';
 									$statusContent = "<select name='status' id='status_" . get_the_id() . "'>";
 									foreach ($statusOptions as $statusOption) {
-										$statusContent .= "<option value='{$statusOption->term_taxonomy_id}'";
-										if ($status[0]->term_taxonomy_id == $statusOption->term_taxonomy_id) {
+										$statusContent .= "<option value='{$statusOption->term_id}'";
+										if ($status[0]->term_id == $statusOption->term_id) {
 											$statusContent .= " selected='selected' ";
 										}
 										$statusContent .= ">{$statusOption->name}</option>";
@@ -53,6 +53,7 @@
 								?>
 								<td class="status sprdsht <?=$statusClass?>">
 									<?=$statusContent?>
+									<input type="hidden" id="old_status_<?php the_id() ?>" value="<?=$status[0]->term_id?>" />
 								</td>		
 								<td>
 									<?php
@@ -74,6 +75,9 @@
 									<?php the_field('summary'); ?>
 								</td>
 								<td>
+									<?php if (is_user_logged_in()): ?>
+									<a href="javascript:void(0)" class="update-action" id="update_<?php the_id() ?>">update</a>
+									<?php endif ?>
 									<a href="<?php the_permalink(); ?>" target="_blank">view case</a>
 								</td>
 							</tr>
@@ -112,3 +116,4 @@
 </div>
 
 <?php get_footer(); ?>
+
