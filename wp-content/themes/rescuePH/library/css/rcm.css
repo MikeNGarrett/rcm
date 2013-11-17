@@ -245,3 +245,26 @@ table.dataTable thead th {
 	max-width: 980px;
 	margin: 40px auto;
 }
+
+
+/* Single Case Styles */
+.case-block { margin-bottom: 2.5em; }
+.case-block h2.case-heading { margin:0; padding: .25em; font-size:1.25em; background-color:#363636; color:white; }
+ul.case-summ { margin:0; }
+.case-summ > li:nth-child(odd) { background-color: #E9E9E9; }
+.case-summ > li:nth-child(odd) span.summ-name { background-color: #BDBDBD; }
+.case-summ span { display:inline-block; padding: .25em; line-height: 1.5em; vertical-align: top; }
+.case-summ span.summ-name { width:19.5%; background-color: #E9E9E9; }
+.case-summ span.summ-entry { width:79.5%; }
+.case-summ span.summ-entry.priority { width:auto; }
+.case-summ span ul { margin:0; }
+.case-summ .priority { margin:0; line-height:1.5em; font-size:1em; padding-left:1em; padding-right:1em; }
+.case-summ .priority a { color:white; }
+
+.case-detail-entry { border:1px solid #E9E9E9; border-top:none; padding: .75em; }
+.case-detail-entry h1.case-title, .case-detail-entry h2.case-title { font-size:1.25em; margin:0 0 .25em; }
+.case-detail-entry p { margin-top:0; }
+.case-detail-entry img.casethumbnail { float:left; margin:0 1em .75em 0; }
+
+a.casestatus { font-weight:bold; color:#04A700; }
+.panel-heading h1 { font-size: 1.75em;  }
