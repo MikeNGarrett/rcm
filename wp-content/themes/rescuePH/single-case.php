@@ -207,11 +207,15 @@ single-bookmarks.php
                                     </div>
                                 </div>
 
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 									<?php if($type[0]->slug == 'rescue') { ?>
 										<h1>Assistance Request Information</h1>
 =======
+=======
+									<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+>>>>>>> 67bb9798fba544b2a70a3a5eece7558aa99382f2
 									<? if($type[0]->slug == 'rescue') { ?>
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
@@ -239,7 +243,6 @@ single-bookmarks.php
 											<h4 class="col-md-6">Location</h4>
                                             <div class="col-md-6"><?php echo $rescue_location['address']; ?></div>
                                             </div>
-											<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 											<script>
 											    var map;
 											    var myLatLang = new google.maps.LatLng( <?php echo $rescue_location['coordinates']; ?>);
@@ -289,8 +292,6 @@ single-bookmarks.php
                                                 <h4 class="col-md-6">Last Seen</h4>
                                                 <div class="col-md-6"><?php echo $tracing_location['address']; ?></div>
                                             </div>
-
-											<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 											<script>
 											    var map;
 											    var myLatLang = new google.maps.LatLng( <?php echo $tracing_location['coordinates']; ?>);

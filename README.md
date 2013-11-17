@@ -15,17 +15,18 @@ Hipchat: https://www.hipchat.com/gBniKYEB9
 1. Live site is on http://sagip.me/
 
 ## Htaccess example
+```
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.php$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.php [L]
 </IfModule>
 # END WordPress
-
+```
 ## Need help?
 Need a user account on the live site? 
 Need files pushed up to live from the repo?

@@ -128,8 +128,11 @@ function bones_scripts_and_styles() {
 		// modernizr (without media query polyfill)
 		wp_register_script( 'bones-modernizr', get_stylesheet_directory_uri() . '/library/js/libs/modernizr.custom.min.js', array(), '2.5.3', false );
 
+		// register main stylesheet
+		wp_register_style( 'bones-stylesheet', get_stylesheet_directory_uri() . '/library/css/style.css', array(), '', 'all' );
+
 		// Register theme-spcific stylesheet
-		wp_register_style( 'bootstrap', get_stylesheet_directory_uri() . '/library/css/bootstrap.css', array(), '', 'all' );
+//		wp_register_style( 'bootstrap', get_stylesheet_directory_uri() . '/library/css/bootstrap.css', array(), '', 'all' );
 
         // ie-only style sheet
 		wp_register_style( 'bones-ie-only', get_stylesheet_directory_uri() . '/library/css/ie.css', array(), '' );
@@ -142,10 +145,14 @@ function bones_scripts_and_styles() {
 		//adding scripts file in the footer
 		wp_register_script( 'bones-js', get_stylesheet_directory_uri() . '/library/js/scripts.js', array( 'jquery' ), '', true );
 
+        wp_register_style( 'rcm', get_stylesheet_directory_uri() . '/library/css/rcm.css', array(), '', 'all');
+
 		// enqueue styles and scripts
 		wp_enqueue_script( 'bones-modernizr' );
+		wp_enqueue_style( 'bones-stylesheet' );
 		wp_enqueue_style( 'bones-ie-only' );
-        wp_enqueue_style( 'bootstrap' );
+//        wp_enqueue_style( 'bootstrap' );
+		wp_enqueue_style('rcm');
 
 		$wp_styles->add_data( 'bones-ie-only', 'conditional', 'lt IE 9' ); // add conditional wrapper around ie stylesheet
 
@@ -156,6 +163,7 @@ function bones_scripts_and_styles() {
 		*/
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'bones-js' );
+
 
 	}
 }
@@ -223,8 +231,6 @@ MENUS & NAVIGATION
 
 // the main menu
 function bones_main_nav() {
-    ob_start();
-
 	// display the wp3 menu if available
 	wp_nav_menu(array(
 		'container' => false,                           // remove nav container
@@ -239,9 +245,6 @@ function bones_main_nav() {
 		'depth' => 0,                                   // limit the depth of the nav
 		'fallback_cb' => 'bones_main_nav_fallback'      // fallback function
 	));
-
-    // Hook in bootstrap nav.
-    echo str_replace('<ul>', '<ul class="nav navbar-nav">', ob_get_clean());
 } /* end bones main nav */
 
 // the footer menu (should you choose to use one)
