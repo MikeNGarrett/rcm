@@ -14,6 +14,7 @@ single-bookmarks.php
 ?>
 
 <?php get_header(); ?>
+
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 	<div id="content" class="row">
 
