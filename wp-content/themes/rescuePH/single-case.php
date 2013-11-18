@@ -210,6 +210,9 @@ single-bookmarks.php
 							<h2 class="case-title">Summary</h2>
 							<?php the_content(); ?>
 
+							<h2 class="case-title">Concern/Risk</h2>
+							<?php the_field('concern'); ?>
+
 						</div> <!-- case-detail-entry -->
 
 					</div> <!-- case-block (2) -->
