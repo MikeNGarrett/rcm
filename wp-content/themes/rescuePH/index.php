@@ -31,8 +31,8 @@
 								<td>
 									<?php echo $type[0]->name; ?>
 								</td>
-								
-								<?php 
+
+								<?php
 								if (!is_user_logged_in()) {
 									// show status as text
 									$statusClass = $status[0]->slug;
@@ -54,7 +54,7 @@
 								<td class="status sprdsht <?=$statusClass?>">
 									<?=$statusContent?>
 									<input type="hidden" id="old_status_<?php the_id() ?>" value="<?=$status[0]->term_id?>" />
-								</td>		
+								</td>
 								<td>
 									<?php
 									if($type[0]->slug == 'rescue') {

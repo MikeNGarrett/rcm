@@ -14,7 +14,7 @@ single-bookmarks.php
 ?>
 
 <?php get_header(); ?>
-
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 	<div id="content" class="row">
 
 		<div id="inner-content" class="col-md-9">
@@ -24,6 +24,104 @@ single-bookmarks.php
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 				<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
+					<div class="full-map">
+						<div class="map" id="loc" style="height:400px; width:400px"></div>
+						<script>
+							function createPinIcon(pinColor) {
+								return new google.maps.MarkerImage(
+									"http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+									new google.maps.Size(21, 34),
+									new google.maps.Point(0,0),
+									new google.maps.Point(10, 34)
+								);
+							}
+
+							var map;
+							var myLatLang = new google.maps.LatLng( <?php the_field('wp_gp_latitude'); ?> , <?php the_field('wp_gp_longitude'); ?>);
+							var myPinColor = "FE7569";
+							var nearbyPinColor = "FEB869";
+
+							function initialize() {
+								var mapOptions = {
+									zoom: 6,
+									center: myLatLang,
+									mapTypeId: google.maps.MapTypeId.ROADMAP
+								};
+								map = new google.maps.Map(document.getElementById('loc'), mapOptions);
+
+								var infoWindow = new google.maps.InfoWindow({ maxWidth: 200 });
+
+								var marker = new google.maps.Marker({
+									position: myLatLang,
+									map: map,
+									icon: createPinIcon(myPinColor),
+									title: <?php echo '"'.$t.'"'?>,
+								});
+
+								<?php
+								$infoContent = "<div class='infoWindow'><h1>" . get_the_title() . '</h1>';
+
+								if ($summary) {
+									$infoContent .= "<div>{$summary}</div>";
+								}
+
+								$infoContent .= '</div>'; ?>
+
+								google.maps.event.addListener(marker, 'click', function() {
+									infoWindow.setContent("<?php echo $infoContent ?>");
+									infoWindow.open(map,this);
+								});
+
+								<?php
+								ob_start();
+								$query = new WP_GeoQuery(array(
+									'latitude' => the_field('wp_gp_latitude'), // Post's Latitude (optional)
+									'longitude' => the_field('wp_gp_longitude'), // Post's Longitude (optional)
+									'radius' => 50, // Radius to select for in miles (optional)
+									'posts_per_page' => 50, // Any regular options available via WP_Query
+								));
+								$throwAway = ob_get_contents();
+								ob_end_clean();
+								?>
+
+								var nearbyIcon = createPinIcon(nearbyPinColor);
+
+								<?php
+								$i =0;
+								$infoContent = array();
+								foreach ($query->posts as $near){ ?>
+
+									<?php if (get_post_meta( $near->ID, "wp_gp_latitude", true ) && $near->post_title != $t){
+										$permalink = get_permalink($near->ID);
+										$customFields = get_post_custom($near->ID);
+										$infoContent[$i] = "<div class='infoWindow'><h1><a href='$permalink'>{$near->post_title}</a></h1>";
+
+										if (isset($customFields['summary'][0])) {
+											$infoContent[$i] .= '<div>' . $customFields['summary'][0] . '</div>';
+										}
+
+										$infoContent[$i] .= '</div>'; ?>
+
+										var marker<?php echo $i; ?> = new google.maps.Marker({
+											position: 	new google.maps.LatLng( <?php echo get_post_meta( $near->ID, "wp_gp_latitude", true ); ?> , <?php echo get_post_meta( $near->ID, "wp_gp_longitude", true ); ?>),
+											map : map,
+											icon: nearbyIcon,
+											title: <?php echo '"'.$near->post_title.'"'; ?>
+										});
+
+										google.maps.event.addListener(marker<?php echo $i; ?>, 'click', function() {
+										infoWindow.setContent("<?php echo $infoContent[$i] ?>");
+										infoWindow.open(map,this);
+										});
+										<?php $i++; ?>
+									<?php }//End if ?>
+								<?php }//End foreach ?>
+							}; <?php //initialize js function ?>
+
+							google.maps.event.addDomListener(window, 'load', initialize);
+
+						</script>
+					</div><?php //Full-map ?>
 
 					<div class="case-summary-head case-block">
 						<h2 class="case-heading">Case Summary</h2>
@@ -73,10 +171,9 @@ single-bookmarks.php
 										<?php
 										echo '<ul class="list-group">';
 										foreach ($type as $term) {
-										    $term_link = get_term_link( $term, 'type' );
-										    if( is_wp_error( $term_link ) )
-										        continue;
-										    echo '<li class="list-group-item"><a href="' . $term_link . '">' . $term->name . '</a></li>';
+											$term_link = get_term_link( $term, 'type' );
+											if( is_wp_error( $term_link ) ) { continue; }
+											echo '<li class="list-group-item"><a href="' . $term_link . '">' . $term->name . '</a></li>';
 										}
 										echo '</ul>'; ?>
 									<?php } ?>
@@ -140,7 +237,6 @@ single-bookmarks.php
 						</ul>
 					</div> <!-- case-block (3) -->
 
-					<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 					<?php if($type[0]->slug == 'rescue') { ?>
 
 						<div class="case-summary-head case-block">
