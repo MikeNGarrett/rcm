@@ -25,6 +25,7 @@ single-bookmarks.php
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 				<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
+					<?php if (get_field('wp_gp_latitude')) { ?>
 					<div class="full-map">
 						<div class="map" id="loc" style="height:400px; width:100%"></div>
 						<script>
@@ -60,7 +61,7 @@ single-bookmarks.php
 								});
 
 								<?php
-								$infoContent = "<div class='infoWindow'><h1>" . get_the_title() . '</h1>';
+								$infoContent = "<div class='infoWindow'><h3>#SME" . $post->ID . '</h3>';
 
 								if ($summary) {
 									$infoContent .= "<div>{$summary}</div>";
@@ -122,7 +123,7 @@ single-bookmarks.php
 							google.maps.event.addDomListener(window, 'load', initialize);
 
 						</script>
-					</div><?php //Full-map ?>
+					</div><?php } //Full-map ?>
 
 					<div class="case-summary-head case-block">
 						<h2 class="case-heading">Case Summary</h2>
