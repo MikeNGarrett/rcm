@@ -24,9 +24,10 @@ single-bookmarks.php
 
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-				<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
+				<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">				
 					
 					<?php if (get_field('wp_gp_latitude') && get_field('wp_gp_longitude')): ?>
+
 					<div class="full-map">
 						<div class="map" id="loc" style="height:400px; width:100%"></div>
 						<script>
@@ -62,7 +63,7 @@ single-bookmarks.php
 								});
 
 								<?php
-								$infoContent = "<div class='infoWindow'><h1>" . get_the_title() . '</h1>';
+								$infoContent = "<div class='infoWindow'><h3>#SME" . $post->ID . '</h3>';
 
 								if ($summary) {
 									$infoContent .= "<div>{$summary}</div>";
@@ -124,6 +125,7 @@ single-bookmarks.php
 							google.maps.event.addDomListener(window, 'load', initialize);
 
 						</script>
+
 					</div><?php //Full-map ?>
 					<?php endif; // end graceful handler when there is no Lat/Lng data ?>
 
