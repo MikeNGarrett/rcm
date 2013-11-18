@@ -196,21 +196,6 @@ a.casebutton:active {
     background:#5d81ab;
     border-color:#80a9da;
 }
-<<<<<<< HEAD
-
-.map div {
-	padding: 0;
-}
-.infoWindow {
-	width: auto;
-	min-height: 50px;
-	padding: 0px !important;
-}
-
-.infoWindow h1 {
-	margin: 0px 0px 5px 0px;
-	font-size: 12px;
-=======
 .dataTables_filter, .dataTables_length {
 	padding-bottom: 30px;
 }
@@ -259,5 +244,4 @@ table.dataTable thead th {
 .footer {
 	max-width: 980px;
 	margin: 40px auto;
->>>>>>> 67bb9798fba544b2a70a3a5eece7558aa99382f2
 }

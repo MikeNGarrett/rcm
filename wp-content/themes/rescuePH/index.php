@@ -1,31 +1,5 @@
 <?php get_header(); ?>
 
-<<<<<<< HEAD
-			<div id="content" class="row">
-
-				<div id="inner-content" class="col-md-12">
-
-						<div id="main" class="twelvecol first clearfix" role="main">
-							<table id="caseTable">
-								<thead>
-								<tr>
-									<th>Type</th>
-									<th>Name</th>
-									<th>Date</th>
-									<th>Priority</th>
-									<th>Status</th>
-									<th>Summary</th>
-									<th>Latitude</th>
-									<th>Longitude</th>
-									<th>Actions</th>
-								</tr>
-								</thead>
-								<tbody>
-							<?php
-							$q = new WP_Query( array('post_type' => 'case') );
-							if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post(); ?>
-							<tr class="<?php
-=======
 <div id="content" class="row">
 
 	<div id="inner-content" class="col-md-12">
@@ -48,7 +22,6 @@
 						$q = new WP_Query( array('post_type' => 'case') );
 						$statusOptions = get_terms('status', 'hide_empty=0');
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
->>>>>>> 67bb9798fba544b2a70a3a5eece7558aa99382f2
 							$type = get_field('type');
 							$priority = get_field('priority');
 							$status = get_field('status');
@@ -58,8 +31,8 @@
 								<td>
 									<?php echo $type[0]->name; ?>
 								</td>
-								
-								<?php 
+
+								<?php
 								if (!is_user_logged_in()) {
 									// show status as text
 									$statusClass = $status[0]->slug;
@@ -81,7 +54,7 @@
 								<td class="status sprdsht <?=$statusClass?>">
 									<?=$statusContent?>
 									<input type="hidden" id="old_status_<?php the_id() ?>" value="<?=$status[0]->term_id?>" />
-								</td>		
+								</td>
 								<td>
 									<?php
 									if($type[0]->slug == 'rescue') {
@@ -102,23 +75,10 @@
 									<?php the_field('summary'); ?>
 								</td>
 								<td>
-<<<<<<< HEAD
-										<?php the_field('wp_gp_latitude'); ?>
-								</td>
-								<td>
-										<?php the_field('wp_gp_longitude'); ?>
-								</td>
-								<td>
-									<a class="" href="<?php the_permalink(); ?>" target="_blank" rel="nofollow">
-									<span class="">view case</span>
-									<span class=""><span></span></span>
-									</a>
-=======
 									<?php if (is_user_logged_in()): ?>
 									<a href="javascript:void(0)" class="update-action" id="update_<?php the_id() ?>">update</a>
 									<?php endif ?>
 									<a href="<?php the_permalink(); ?>" target="_blank">view case</a>
->>>>>>> 67bb9798fba544b2a70a3a5eece7558aa99382f2
 								</td>
 							</tr>
 						<?php endwhile; ?>
