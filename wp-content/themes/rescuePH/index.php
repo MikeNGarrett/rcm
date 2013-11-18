@@ -23,7 +23,7 @@
 						$statusOptions = get_terms('status', 'hide_empty=0');
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
 							$type = wp_get_post_terms($post->ID, 'type', array("fields" => "names"))[0];
-							$priority = wp_get_post_terms($post->ID, 'type', array("fields" => "names"))[0];
+							$priority = wp_get_post_terms($post->ID, 'priority', array("fields" => "names"))[0];
 							$status = wp_get_post_terms($post->ID, 'status', array("fields" => "names"))[0];
 							//$status = get_field('status');
 							?>
