@@ -39,7 +39,7 @@ require_once( 'library/bones.php' ); // if you remove this, bones will break
 // require_once( 'library/translation/translation.php' ); // this comes turned off by default
 
 /* import CPT */
-require_once('library/cpt_case.php');
+require_once('library/cpt-case.php');
 
 /*
 	Custom Columns in UI for "Case" CPT
