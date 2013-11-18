@@ -18,6 +18,7 @@ jQuery(document).ready(function(){
 			if (response != 'ok') {
 				console.log('status update failed');
 			}
+			$("#old_status_" + postId).val(statusId);
 		});
 	});
 });
