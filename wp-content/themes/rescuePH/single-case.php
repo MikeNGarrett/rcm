@@ -28,7 +28,7 @@ single-bookmarks.php
 					
 					<?php if (get_field('wp_gp_latitude') && get_field('wp_gp_longitude')): ?>
 					<div class="full-map">
-						<div class="map" id="loc" style="height:400px; width:400px"></div>
+						<div class="map" id="loc" style="height:400px; width:100%"></div>
 						<script>
 							function createPinIcon(pinColor) {
 								return new google.maps.MarkerImage(
@@ -46,7 +46,7 @@ single-bookmarks.php
 
 							function initialize() {
 								var mapOptions = {
-									zoom: 6,
+									zoom: 10,
 									center: myLatLang,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
@@ -131,24 +131,32 @@ single-bookmarks.php
 						<h2 class="case-heading">Case Summary</h2>
 						<ul class="case-summ">
 							<li>
+								<span class="summ-name">ID</span>
+								<span class="summ-entry">SME<?php the_ID(); ?></span>
+							</li>
+							<li>
 								<span class="summ-name">Date</span>
 								<span class="summ-entry"><a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a></span>
 							</li>
 
-							<?php if($status = get_field('status')) { ?>
 							<li>
 								<span class="summ-name">Status</span>
 								<span class="summ-entry">
-								    <?php
-								    foreach ($status as $term) {
-								        $term_link = get_term_link( $term, 'status' );
-								        if( is_wp_error( $term_link ) )
-								            continue;
-										echo '<a href="' . $term_link . '" class="casestatus">' . $term->name . '</a>';
-									} ?>
+								    <?php 
+									$terms = wp_get_post_terms($post->ID, 'status', array("fields" => "names"));
+									$count = count($terms);
+									if ( $count > 0 ){
+										echo '<ul class="list-group">';
+										foreach ( $terms as $term ) {
+											echo '<li>' . $term . '</li>'; 
+										}
+										echo '</ul>';
+									} else {
+										echo "Unassigned";
+									}
+									?>
 								</span>
 							</li>
-							<?php } ?>
 
 
 							<?php if($priority = get_field('priority')) { ?>
@@ -171,23 +179,26 @@ single-bookmarks.php
 							<li>
 								<span class="summ-name">Type</span>
 								<span class="summ-entry">
-									<?php if($type = get_field('type')) { ?>
-										<?php
+									<?php 
+									$terms = wp_get_post_terms($post->ID, 'type', array("fields" => "names"));
+									$count = count($terms);
+									if ( $count > 0 ){
 										echo '<ul class="list-group">';
-										foreach ($type as $term) {
-											$term_link = get_term_link( $term, 'type' );
-											if( is_wp_error( $term_link ) ) { continue; }
-											echo '<li class="list-group-item"><a href="' . $term_link . '">' . $term->name . '</a></li>';
+										foreach ( $terms as $term ) {
+											echo '<li>' . $term . '</li>'; 
 										}
-										echo '</ul>'; ?>
-									<?php } ?>
+										echo '</ul>';
+									} else {
+										echo "Unassigned";
+									}
+									?>
 								</span>
 							</li>
 						</ul> <!-- case-summ -->
 					</div> <!-- case-block (1) -->
 
 
-					<div class="case-detail-head case-block">
+					<div class="case-detail-head case-block clearfix">
 						<h2 class="case-heading">Case Details</h2>
 						<div class="case-detail-entry">
                             <?php if(has_post_thumbnail()) { ?>
@@ -196,13 +207,10 @@ single-bookmarks.php
                                 <img class="casethumbnail" src="http://placehold.it/150&text=No+Image" alt="">
                             <?php } ?>
 
-                            <h2 class="case-title"><?php the_title(); ?></h2>
+                            <h2 class="case-title">Case ID</h2>
+                            <p>SME<?php the_ID(); ?></p>
 
-                            <?php if($summary = get_field('summary')) { ?>
-                                <div class="casesummary clearfix"><p><?php  echo $summary; ?></p></div>
-                            <?php } ?>
-
-							<h2 class="case-title">More Details</h2>
+							<h2 class="case-title">Summary</h2>
 							<?php the_content(); ?>
 
 						</div> <!-- case-detail-entry -->
@@ -210,16 +218,16 @@ single-bookmarks.php
 					</div> <!-- case-block (2) -->
 
 					<div class="case-summary-head case-block">
-						<h2 class="case-heading">Request made by</h2>
+						<h2 class="case-heading">Reported by</h2>
 						<ul class="case-summ">
-							<?php if($requester_name = get_field('requester_name')) { ?>
+							<?php if($requester_name = get_field('reported_by')) { ?>
 							<li>
 								<span class="summ-name">Name</span>
 								<span class="summ-entry"><?php echo $requester_name; ?></span>
 							</li>
 							<?php } ?>
 
-							<?php if($requester_contact_info = get_field('requester_contact_info')) { ?>
+							<?php if($requester_contact_info = get_field('contact_info')) { ?>
 							<li>
 								<span class="summ-name">Contact Information</span>
 								<span class="summ-entry"><?php  echo $requester_contact_info; ?></span>
@@ -240,112 +248,6 @@ single-bookmarks.php
 							<?php } ?>
 						</ul>
 					</div> <!-- case-block (3) -->
-
-					<?php if($type[0]->slug == 'rescue') { ?>
-
-						<div class="case-summary-head case-block">
-							<h2 class="case-heading">Assistance Request Information</h2>
-							<ul class="case-summ">
-								<?php if($name = get_field('name')) { ?>
-								<li>
-									<span class="summ-name">Name</span>
-									<span class="summ-entry"><?php echo $name; ?></span>
-								</li>
-								<?php } ?>
-
-								<?php if($contact = get_field('contact')) { ?>
-								<li>
-									<span class="summ-name">Contact Information</span>
-									<span class="summ-entry"><?php echo $contact; ?></span>
-								</li>
-								<?php } ?>
-
-								<?php if($rescue_location = get_field('request_location')) { ?>
-								<li>
-									<span class="summ-name">Location</span>
-									<span class="summ-entry">
-										<?php echo $rescue_location['address'];  ?>
-
-										<script>
-										    var map;
-										    var myLatLang = new google.maps.LatLng( <?php echo $rescue_location['coordinates']; ?>);
-										    function initialize() {
-										        var mapOptions = {
-										            zoom: 6,
-										            center: myLatLang,
-										            mapTypeId: google.maps.MapTypeId.ROADMAP
-										        };
-										        map = new google.maps.Map(document.getElementById('map-canvas'),
-										        mapOptions);
-										        var marker = new google.maps.Marker({
-										            position: myLatLang,
-										            map: map,
-										            title:"Rescue Location"
-										        });
-										    };
-										    google.maps.event.addDomListener(window, 'load', initialize);
-										</script>
-										<div id="map-canvas"></div>
-
-									</span>
-								</li>
-								<?php } // End Rescue location ?>
-
-
-							</ul>
-						</div> <!-- case-block (4) -->
-					<?php } // End check for rescue type ?>
-
-
-					<? if($type[0]->slug == 'tracing') { ?>
-						<div class="case-summary-head case-block">
-							<h2 class="case-heading">Tracing Request Information</h2>
-							<ul class="case-summ">
-								<?php if($tracing_name = get_field('tracing_name')) { ?>
-								<li>
-									<span class="summ-name">Name of Missing Person</span>
-									<span class="summ-entry"><?php echo $tracing_name; ?></span>
-								</li>
-								<?php } ?>
-
-								<?php if($tracing_location = get_field('tracing_location')) { ?>
-								<li>
-									<span class="summ-name">Last Seen</span>
-									<span class="summ-entry">
-										<?php echo $tracing_location['address']; ?>
-										<script>
-										    var map;
-										    var myLatLang = new google.maps.LatLng( <?php echo $tracing_location['coordinates']; ?>);
-										    function initialize() {
-										        var mapOptions = {
-										            zoom: 6,
-										            center: myLatLang,
-										            mapTypeId: google.maps.MapTypeId.ROADMAP
-										        };
-										        map = new google.maps.Map(document.getElementById('map-canvas'),
-										        mapOptions);
-										        var marker = new google.maps.Marker({
-										            position: myLatLang,
-										            map: map,
-										            title:"Last Seen Location"
-										        });
-										    };
-										    google.maps.event.addDomListener(window, 'load', initialize);
-										</script>
-										<div id="map-canvas"></div>
-									</span>
-								</li>
-								<?php } // End Tracing location ?>
-
-								<?php if($tracing_information = get_field('tracing_information')) { ?>
-								<li>
-									<span class="summ-name">Additional Information</span>
-									<span class="summ-entry"><?php echo $tracing_information; ?></span>
-								</li>
-								<?php } ?>
-							</ul>
-						</div>  <!-- case-block (5) -->
-					<?php  } // End check for tracing type ?>
 
                     <div class="panel panel-default">
                         <div class="panel-body">
