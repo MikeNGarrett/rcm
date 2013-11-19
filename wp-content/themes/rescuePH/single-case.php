@@ -129,6 +129,7 @@ single-bookmarks.php
 					</div><?php //Full-map ?>
 					<?php endif; // end graceful handler when there is no Lat/Lng data ?>
 
+
 					<div class="case-summary-head case-block">
 						<h2 class="case-heading">Case Summary</h2>
 						<ul class="case-summ">
