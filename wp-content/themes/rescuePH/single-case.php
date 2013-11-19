@@ -24,6 +24,8 @@ single-bookmarks.php
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 				<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
+					
+					<?php if (get_field('wp_gp_latitude') && get_field('wp_gp_longitude')): ?>
 					<div class="full-map">
 						<div class="map" id="loc" style="height:400px; width:400px"></div>
 						<script>
@@ -122,6 +124,7 @@ single-bookmarks.php
 
 						</script>
 					</div><?php //Full-map ?>
+					<?php endif; // end graceful handler when there is no Lat/Lng data ?>
 
 					<div class="case-summary-head case-block">
 						<h2 class="case-heading">Case Summary</h2>
