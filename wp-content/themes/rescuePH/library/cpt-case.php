@@ -260,6 +260,7 @@ if(function_exists("register_field_group")) {
 				6 => 'categories',
 				7 => 'tags',
 				8 => 'send-trackbacks',
+				9 => 'custom-fields',
 			),
 		),
 		'menu_order' => 0,
