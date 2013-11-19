@@ -22,21 +22,22 @@
 						$q = new WP_Query( array('post_type' => 'case') );
 						$statusOptions = get_terms('status', 'hide_empty=0');
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
-							$type = get_field('type');
-							$priority = get_field('priority');
-							$status = get_field('status');
+							$type = wp_get_post_terms($post->ID, 'type', array("fields" => "names"))[0];
+							$priority = wp_get_post_terms($post->ID, 'priority', array("fields" => "names"))[0];
+							$status = wp_get_post_terms($post->ID, 'status', array("fields" => "names"))[0];
+							//$status = get_field('status');
 							?>
 
 							<tr class="<?php echo $type[0]->slug." "; echo $priority[0]->slug; ?> case">
 								<td>
-									<?php echo $type[0]->name; ?>
+									<?php echo $type; ?>
 								</td>
 
 								<?php
 								if (!is_user_logged_in()) {
 									// show status as text
 									$statusClass = $status[0]->slug;
-									$statusContent = $status[0]->name;
+									$statusContent = $status;
 								} else {
 									// show status as dropdown
 									$statusClass = '';
@@ -56,23 +57,16 @@
 									<input type="hidden" id="old_status_<?php the_id() ?>" value="<?=$status[0]->term_id?>" />
 								</td>
 								<td>
-									<?php
-									if($type[0]->slug == 'rescue') {
-										the_field('name');
-									}
-									if($type[0]->slug == 'tracing') {
-										the_field('tracing_name');
-									}
-									?>
+									<?php the_field('reported_by'); ?>
 								</td>
 								<td>
 									<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
 								</td>
 								<td class="priority <?php echo $priority[0]->slug; ?> sprdsht">
-									<?php echo $priority[0]->name; ?>
+									<?php echo $priority; ?>
 								</td>
 								<td>
-									<?php the_field('summary'); ?>
+									<?php the_content(); ?>
 								</td>
 								<td>
 									<?php if (is_user_logged_in()): ?>
