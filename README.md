@@ -27,6 +27,21 @@ Hipchat: https://www.hipchat.com/gBniKYEB9
 </IfModule>
 # END WordPress
 ```
+
+## Data Import
+Save a copy of [this Google Doc](https://docs.google.com/spreadsheet/ccc?key=0At2Cl1rhLtA_dFF0TjYyeGlNU1JIeHhmLU9VcUVldHc&usp=sharing) and follow the instructions on the first sheet.
+
+Basic steps are:
+
+1. Fill in form
+2. Save as CSV
+3. Go to Tools -> Import -> CSV (in WP Admin section)
+4. Follow instructions
+5. Verify imported cases
+
+Spreadsheets templates can also be found in the __"data-import"__ folder in Excel and Open Document Format.
+
+
 ## Need help?
 Need a user account on the live site? 
 Need files pushed up to live from the repo?
