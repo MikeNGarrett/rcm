@@ -28,7 +28,8 @@
 		<meta name="msapplication-TileColor" content="#f01d4f">
 		<meta name="msapplication-TileImage" content="<?php echo get_template_directory_uri(); ?>/library/images/win8-tile-icon.png">
 
-		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
+		<!-- DataTables CSS -->
+		<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
 
 		<?php // wordpress head functions ?>
 		<?php wp_head(); ?>
@@ -44,21 +45,22 @@
 		<div id="container">
 
 			<header class="header" role="banner">
-					
-					<nav role="navigation" class="nav">
-					<div class="nav wrap clearfix">
-						<?php bones_main_nav(); ?>
-					</div>
-					</nav>
-					
+
+
 				<div id="inner-header" class="wrap clearfix">
-				
+
 
 					<?php // to use a image just replace the bloginfo('name') with your img src and remove the surrounding <p> ?>
-					<p id="logo" class="h1"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></p>
+					<h1 id="logo"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></h1>
 
 					<?php // if you'd like to use the site description you can un-comment it below ?>
 					<?php // bloginfo('description'); ?>
 				</div>
+
+				<nav role="navigation" class="nav" id="main-nav">
+				<div class="nav wrap clearfix">
+					<?php bones_main_nav(); ?>
+				</div>
+				</nav>
 
 			</header>

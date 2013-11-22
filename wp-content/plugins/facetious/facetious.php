@@ -157,15 +157,20 @@ class Facetious extends Facetious_Plugin {
 		$parts = array();
 		$base  = $this->get_search_base();
 
+        $customTaxes = array_keys(get_taxonomies(array('_builtin' => false)));
+
 		# Build the array containing alternating keys and values
 		foreach ( $query as $key => $val ) {
 			if ( 'post_type' == $key )
 				continue;
 			if ( '' !== $val ) {
-				$parts[] = $this->get_search_part( $key );
+                $part = $this->get_search_part( $key );
+                $part = in_array($part, $customTaxes) ? 'tax_' . $part : $part;
+				$parts[] = $part;
 				$parts[] = $this->encode( stripslashes( $val ) );
 			}
 		}
+
 
 		# Special case: If we've only got a keyword search parameter then we can strip the
 		# leading 'keyword/' part for brevity
