@@ -296,7 +296,7 @@ single-bookmarks.php
 					<?php } // End check for rescue type ?>
 
 
-					<? if($type[0]->slug == 'tracing') { ?>
+					<?php if($type[0]->slug == 'tracing') { ?>
 						<div class="case-summary-head case-block">
 							<h2 class="case-heading">Tracing Request Information</h2>
 							<ul class="case-summ">
@@ -392,5 +392,4 @@ single-bookmarks.php
         */ ?>
 
 	</div> <!-- content -->
-
 <?php get_footer(); ?>

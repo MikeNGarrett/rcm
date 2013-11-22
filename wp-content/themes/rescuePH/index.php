@@ -1,9 +1,22 @@
 <?php get_header(); ?>
 
+
 <div id="content" class="row">
 
 	<div id="inner-content" class="col-md-12">
-
+        <div class="faceted-search-div">
+            <?php
+                do_action('facetious', array(
+                    'submit' => 'Search',
+                    'echo' => true,
+                    'class' => 'form',
+                    'id' => 'faceted-search',
+                    'fields' => array(
+                        's', 'type', 'status'
+                    )
+                ));
+            ?>
+        </div>
 			<div id="main" class="twelvecol first clearfix" role="main">
 				<table id="caseTable">
 					<thead>
