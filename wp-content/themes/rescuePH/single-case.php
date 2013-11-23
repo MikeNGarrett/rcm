@@ -139,12 +139,32 @@ single-bookmarks.php
 								<span class="summ-name">Status</span>
 								<span class="summ-entry">
 								    <?php
-								    foreach ($status as $term) {
-								        $term_link = get_term_link( $term, 'status' );
-								        if( is_wp_error( $term_link ) )
-								            continue;
-										echo '<a href="' . $term_link . '" class="casestatus">' . $term->name . '</a>';
-									} ?>
+								    if (is_user_logged_in()) {
+								    	$statusOptions = get_terms('status', 'hide_empty=0'); ?>
+										<select name="status" id="status">
+								    	<?php foreach ($statusOptions as $statusOption):
+								    		$isSelected = $status[0]->term_id == $statusOption->term_id ?>
+									    	<option value="<?=$statusOption->term_id?>" <?=$isSelected ? 'selected="selected"' : ''?>>
+									    		<?=$statusOption->name?>
+									    	</option>
+								    	<?php endforeach ?>
+								    	</select>
+								    	<input type="hidden" id="old-status" value="<?=$status[0]->term_id?>" />
+								    	<input type="hidden" id="case-id" value="<?php the_ID()?>" />
+
+								    	<input type="button" id="update-status" class="button" value="Update"/>
+								    	<span id="update-status-msg" style="display:none"></span>
+								    	<img id="update-status-loader" class="loader" style="display:none;" src="<?=get_template_directory_uri()?>/library/images/ajax-loader.gif">
+								    <?php } else {
+										foreach ($status as $term) {
+										    $term_link = get_term_link( $term, 'status' );
+										    if( is_wp_error( $term_link ) )
+										        continue;
+											echo '<a href="' . $term_link . '" class="casestatus">' . $term->name . '</a>';
+										} 
+								    }
+								    
+									?>
 								</span>
 							</li>
 							<?php } ?>

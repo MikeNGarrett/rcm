@@ -268,3 +268,18 @@ ul.case-summ { margin:0; }
 
 a.casestatus { font-weight:bold; color:#04A700; }
 .panel-heading h1 { font-size: 1.75em;  }
+
+.case-summ input[type="button"], select { margin: 0; vertical-align: middle } 
+
+
+/* case status */
+.errorMsg, .successMsg { 
+	border-radius: 6px; 
+	margin-bottom: 20px; 
+	font-size: 12px; 
+	margin: 0px 0px 0px 10px; 
+	padding: 3px 5px 3px 23px !important;
+}
+.errorMsg {  background: url(../images/cross.png) no-repeat #FFEBED 4px;  border: 1px solid #FCD2D7;  color: #9C434F;  }
+.successMsg {  background: url(../images/check.png) no-repeat #EDFCF1 4px;  border: 1px solid #8CBD99;  color: #2F8245; }
+.loader { margin-left: 10px; vertical-align: middle; }

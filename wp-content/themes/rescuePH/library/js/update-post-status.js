@@ -1,24 +1,35 @@
 jQuery(document).ready(function(){
-	$('.update-action').click(function(){
-		var parts = $(this).attr('id').split('_');
-		var postId = parts[1];
-		var old_status_id = $("#old_status_" + postId).val();
-		var statusId = $("#status_" + postId).val();
-		if (old_status_id  == statusId) {
+	$('#update-status').click(function(){
+
+		var oldStatus = $("#old-status");
+		var statusId = $("#status").val();
+		var caseId = $("#case-id").val();
+		var systemMsg = $("#update-status-msg");
+		var loader = $("#update-status-loader");
+
+
+		if (oldStatus.val() == statusId) {
 			return;
 		}
 
 		postData = {
 			action: 'updatePostStatus',
-			postId: postId,
+			postId: caseId,
 			statusId: statusId,
 			nextNonce: PT_Ajax.nextNonce
 		};
+		loader.show();
+		systemMsg.hide();
 		$.post(PT_Ajax.ajaxUrl, postData, function(response) {
+			// response = '';
+			loader.hide();
+			systemMsg.show();
 			if (response != 'ok') {
-				console.log('status update failed');
+				systemMsg.removeClass().addClass("errorMsg").html("Failed updating the status of the case!");
+				return;
 			}
-			$("#old_status_" + postId).val(statusId);
+			oldStatus.val(statusId);
+			systemMsg.removeClass().addClass("successMsg").html("Successfully updated status!");
 		});
 	});
 });

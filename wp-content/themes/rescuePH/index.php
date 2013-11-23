@@ -3,7 +3,9 @@
 <div id="content" class="row">
 
 	<div id="inner-content" class="col-md-12">
-
+			
+			<div id="systemMsg"></div>
+			
 			<div id="main" class="twelvecol first clearfix" role="main">
 				<table id="caseTable">
 					<thead>
@@ -20,7 +22,6 @@
 					<tbody>
 						<?php
 						$q = new WP_Query( array('post_type' => 'case') );
-						$statusOptions = get_terms('status', 'hide_empty=0');
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
 							$type = get_field('type');
 							$priority = get_field('priority');
@@ -33,27 +34,11 @@
 								</td>
 
 								<?php
-								if (!is_user_logged_in()) {
-									// show status as text
 									$statusClass = $status[0]->slug;
 									$statusContent = $status[0]->name;
-								} else {
-									// show status as dropdown
-									$statusClass = '';
-									$statusContent = "<select name='status' id='status_" . get_the_id() . "'>";
-									foreach ($statusOptions as $statusOption) {
-										$statusContent .= "<option value='{$statusOption->term_id}'";
-										if ($status[0]->term_id == $statusOption->term_id) {
-											$statusContent .= " selected='selected' ";
-										}
-										$statusContent .= ">{$statusOption->name}</option>";
-									}
-									$statusContent .= "</select>";
-								}
 								?>
 								<td class="status sprdsht <?=$statusClass?>">
 									<?=$statusContent?>
-									<input type="hidden" id="old_status_<?php the_id() ?>" value="<?=$status[0]->term_id?>" />
 								</td>
 								<td>
 									<?php
