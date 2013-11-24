@@ -4,33 +4,73 @@
 
 				<div id="inner-content" class="wrap clearfix">
 
-					<div id="main" class="eightcol first clearfix" role="main">
+					<div id="main" class="twelvecol first clearfix" role="main">
 						<h1 class="archive-title"><span><?php _e( 'Search Results for:', 'bonestheme' ); ?></span> <?php echo esc_attr(get_search_query()); ?></h1>
 
 						<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-							<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
+				<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
+					<h2><a href="<?php the_permalink(); ?>">Case posted <?php the_time(get_option('date_format')); ?></a></h2>
+					<h3>Location</h3>
+					<?php if (get_field('wp_gp_location')) { ?>
+						<p><strong><?php the_field('location'); ?></strong></p>
+					<?php } else { // end graceful handler when there is no Lat/Lng data ?>
+						<p><strong>Location Unknown</strong></p>
+					<?php } ?>
 
-								<header class="article-header">
+					<div class="case-summary-head case-block">
+						<h2 class="case-heading">Case Summary</h2>
+						<ul class="case-summ">
+							<li>
+								<span class="summ-name">Status</span>
+								<span class="summ-entry">
+								    <?php
+									$status = wp_get_post_terms( $post->ID, 'status');
+									foreach ($status as $term) {
+									    $term_link = get_term_link( $term, 'status' );
+									    if( is_wp_error( $term_link ) )
+									        continue;
+										echo '<a href="' . $term_link . '" class="casestatus">' . $term->name . '</a>';
+									}
+									?>
+								</span>
+							</li>
 
-									<h3 class="search-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-									<p class="byline vcard"><?php
-										printf( __( 'Posted <time class="updated" datetime="%1$s" pubdate>%2$s</time> by <span class="author">%3$s</span> <span class="amp">&</span> filed under %4$s.', 'bonestheme' ), get_the_time( 'Y-m-j' ), get_the_time( __( 'F jS, Y', 'bonestheme' ) ), bones_get_the_author_posts_link(), get_the_category_list(', ') );
-									?></p>
 
-								</header>
+							<?php if($priority = wp_get_post_terms( $post->ID, 'priority')) { ?>
+								<li>
+									<span class="summ-name">Priority</span>
+									<span class="summ-entry priority <?php echo $priority[0]->slug; ?>">
+										<?php
+										echo '<ul class="list-group">';
+										foreach ($priority as $term) {
+										    $term_link = get_term_link( $term, 'priority' );
+										    if( is_wp_error( $term_link ) ) { continue; }
+										    echo '<li class="list-group-item"><a href="' . $term_link . '">' . $term->name . '</a></li>';
+										}
+										echo '</ul>'; ?>
+									</span>
+								</li>
+							<?php } ?>
 
-								<section class="entry-content">
-										<?php the_excerpt( '<span class="read-more">' . __( 'Read more &raquo;', 'bonestheme' ) . '</span>' ); ?>
-
-								</section>
-
-								<footer class="article-footer">
-
-								</footer>
-
-							</article>
-
+							<?php if($type = wp_get_post_terms( $post->ID, 'type')) { ?>
+								<li>
+									<span class="summ-name">Type</span>
+									<span class="summ-entry">
+											<?php
+											foreach ($type as $term) {
+												$term_link = get_term_link( $term, 'type' );
+												if( is_wp_error( $term_link ) ) { continue; }
+												echo '<a href="' . $term_link . '">' . $term->name . '</a>';
+											} ?>
+									</span>
+								</li>
+							<?php } ?>
+						</ul> <!-- case-summ -->
+					</div> <!-- case-block (1) -->
+					<p><a href="<?php the_permalink(); ?>" class="button">View Case</a></p>
+				</article>
+				<hr>
 						<?php endwhile; ?>
 
 								<?php if (function_exists('bones_page_navi')) { ?>
@@ -61,8 +101,6 @@
 							<?php endif; ?>
 
 						</div>
-
-							<?php get_sidebar(); ?>
 
 					</div>
 

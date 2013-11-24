@@ -25,9 +25,10 @@ single-bookmarks.php
 
 				<article id="post-<?php the_ID(); ?>" <?php post_class('clearfix'); ?> role="article">
 
-					<?php if (get_field('wp_gp_latitude') && get_field('wp_gp_longitude')): ?>
+					<h2>Location</h2>
+					<?php if (get_field('wp_gp_latitude') && get_field('wp_gp_longitude')) { ?>
 					<div class="full-map">
-						<div class="map" id="loc" style="height:400px; width:400px"></div>
+						<div class="map" id="loc" style="height:400px; width:980px"></div>
 						<script>
 							function createPinIcon(pinColor) {
 								return new google.maps.MarkerImage(
@@ -123,9 +124,11 @@ single-bookmarks.php
 							google.maps.event.addDomListener(window, 'load', initialize);
 
 						</script>
+						<p><strong><?php the_field('location'); ?></strong></p>
 					</div><?php //Full-map ?>
-					<?php endif; // end graceful handler when there is no Lat/Lng data ?>
-
+					<?php } else { // end graceful handler when there is no Lat/Lng data ?>
+						<p><strong>Location Unknown</strong></p>
+					<?php } ?>
 					<div class="case-summary-head case-block">
 						<h2 class="case-heading">Case Summary</h2>
 						<ul class="case-summ">
@@ -211,13 +214,12 @@ single-bookmarks.php
                                 <img class="casethumbnail" src="http://placehold.it/150&text=No+Image" alt="">
                             <?php } ?>
 
-                            <?php /* <h2 class="case-title"><?php the_title(); ?></h2> */ ?>
-
-                            <?php /*if($summary = get_field('summary')) { ?>
+                            <?php if($summary = get_field('concern')) { ?>
+                                <h3 class="case-title">The Concern</h3>
                                 <div class="casesummary clearfix"><p><?php  echo $summary; ?></p></div>
-                            <?php } */ ?>
+                            <?php }  ?>
 
-							<h2 class="case-title">More Details</h2>
+							<h3 class="case-title">More Details</h3>
 							<?php the_content(); ?>
 
 						</div> <!-- case-detail-entry -->

@@ -16,7 +16,13 @@ body {
 	text-indent: -9999px;
 	padding: 0;
 }
-#logo a, a:link, a:visited {
+
+#logo a {
+	display: block;
+	height: 100px;
+	width: 360px;
+}
+a:link, a:visited {
 	color: #0093d7;
 	text-decoration: none;
 }
@@ -106,7 +112,23 @@ table.dataTable td {
 .status.active {
   color: #04A700;
 }
-
+.button, button, input[type=button] {
+	border: none;
+	text-shadow: none;
+	background: #2e4da6;
+}
+.button:hover, button:hover, input[type=button]:hover {
+	background: #1b80cd;
+	border: none;
+}
+.button:focus, button:focus, input[type=button]:focus {
+	background: #1b80cd;
+	border: none;
+}
+.button:active, button:active, input[type=button]:active {
+	background: #193381;
+	border: none;
+}
 
 #main-nav {
 	border-radius: 6px;
@@ -141,7 +163,7 @@ a.casebutton{
     padding-left:15px;
     padding-right:80px;
     margin: 0px;
-    background:#2E4DA7;
+    background:#2e4da6;
     height:38px; width:150px;
     display:inline-block;
     overflow:hidden;
@@ -331,4 +353,10 @@ form#faceted-search .facetious_submit_button
     color: #fff;
     height: 30px;
     padding: 3px 10px;
+}
+.page-numbers li {
+	float: left;
+}
+.page-numbers li a, .page-numbers li .current {
+	padding: 10px;
 }

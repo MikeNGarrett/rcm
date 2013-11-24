@@ -28,16 +28,18 @@
 		<script type="text/javascript" charset="utf8">
 
 		$(document).ready(function(){
-		  var dTable = $('#caseTable').dataTable({
-			"aoColumnDefs": [
-			  { "bSortable": false, "aTargets": [ 0, 2, 5, 6 ] },
-			  { "bSearchable": false, "aTargets": [ 0,1,3,4 ] },
-			  { "sType": "date", "aTargets": [ 4 ] },
-			  { "sType": "html", "aTargets": [ 2,5,6 ] },
-			  { "sWidth": "25%", "aTargets": [ 2,4 ] },
-			  { "sWidth": "10%", "aTargets": [ 3,5, 6 ] }
-			] } );
-    	  dTable.fnSort( [ [4,'desc'] ] );
+		  if($('body').hasClass('home') || $('body').hasClass('archive')) {
+			  var dTable = $('#caseTable').dataTable({
+				"aoColumnDefs": [
+				  { "bSortable": false, "aTargets": [ 0, 2, 5, 6 ] },
+				  { "bSearchable": false, "aTargets": [ 0,1,3,4 ] },
+				  { "sType": "date", "aTargets": [ 4 ] },
+				  { "sType": "html", "aTargets": [ 2,5,6 ] },
+				  { "sWidth": "25%", "aTargets": [ 2,4 ] },
+				  { "sWidth": "10%", "aTargets": [ 3,5, 6 ] }
+				] } );
+	    	  dTable.fnSort( [ [4,'desc'] ] );
+    	  }
 		});
 		</script>
             </div>

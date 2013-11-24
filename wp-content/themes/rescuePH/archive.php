@@ -4,8 +4,7 @@
 
 				<div id="inner-content" class="wrap clearfix">
 
-						<div id="main" class="eightcol first clearfix" role="main">
-
+			<div id="main" class="twelvecol first clearfix" role="main">
 							<?php if (is_category()) { ?>
 								<h1 class="archive-title h2">
 									<span><?php _e( 'Posts Categorized:', 'bonestheme' ); ?></span> <?php single_cat_title(); ?>
@@ -14,6 +13,18 @@
 							<?php } elseif (is_tag()) { ?>
 								<h1 class="archive-title h2">
 									<span><?php _e( 'Posts Tagged:', 'bonestheme' ); ?></span> <?php single_tag_title(); ?>
+								</h1>
+							<?php } elseif (is_tax('type')) { ?>
+								<h1 class="archive-title h2">
+									<span><?php _e( 'Case Type:', 'bonestheme' ); ?></span> <?php single_tag_title(); ?>
+								</h1>
+							<?php } elseif (is_tax('status')) { ?>
+								<h1 class="archive-title h2">
+									<span><?php _e( 'Case Status:', 'bonestheme' ); ?></span> <?php single_tag_title(); ?>
+								</h1>
+							<?php } elseif (is_tax('priority')) { ?>
+								<h1 class="archive-title h2">
+									<span><?php _e( 'Case Priority:', 'bonestheme' ); ?></span> <?php single_tag_title(); ?>
 								</h1>
 
 							<?php } elseif (is_author()) {
@@ -40,69 +51,82 @@
 										<span><?php _e( 'Yearly Archives:', 'bonestheme' ); ?></span> <?php the_time('Y'); ?>
 									</h1>
 							<?php } ?>
+				<table id="caseTable">
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Status</th>
+							<th>Concern</th>
+							<th>Priority</th>
+							<th>Date</th>
+							<th>Reported By</th>
+							<th>View Case</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+//						$q = new WP_Query( array('post_type' => 'case', 'posts_per_page' => '50') );
+//						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
+						query_posts( array( 'post_type' => 'case', 'posts_per_page' => '50' ) );
+						if (have_posts()) : while (have_posts()) : the_post();
+							$type = wp_get_post_terms($post->ID, 'type');
+							$type = $type[0];
+							$priority = wp_get_post_terms($post->ID, 'priority');
+							$priority = $priority[0];
+							$status = wp_get_post_terms($post->ID, 'status');
+							$status = $status[0];
+							//$status = get_field('status');
+							?>
 
-							<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+							<tr class="<?php echo $type->slug." "; echo $priority->slug; ?> case">
+								<td>
+									<?php echo $type->name; ?>
+								</td>
+								<td class="status sprdsht <?php echo $status->slug; ?>">
+									<?php echo $status->name; ?>
+								</td>
+								<td class="concern">
+									<?php the_field('concern'); ?>
+								</td>
+								<td class="priority <?php echo $priority->slug; ?> sprdsht">
+									<?php echo $priority->name; ?>
+								</td>
+								<td class="date">
+									<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
+								</td>
+								<td class="reportedBy">
+									<?php the_field('reported_by'); ?>
+								</td>
+								<td class="action">
+									<a href="<?php the_permalink(); ?>" target="_blank" >view case</a>
+								</td>
+							</tr>
+						<?php endwhile; ?>
+					</tbody>
+				</table>
 
-							<article id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix' ); ?> role="article">
+		<?php else : ?>
 
-								<header class="article-header">
+				<article id="post-not-found" class="hentry clearfix">
+						<header class="article-header">
+							<h1><?php _e( 'Oops, Post Not Found!', 'bonestheme' ); ?></h1>
+					</header>
+						<section class="entry-content">
+							<p><?php _e( 'Uh Oh. Something is missing. Try double checking things.', 'bonestheme' ); ?></p>
+					</section>
+					<footer class="article-footer">
+							<p><?php _e( 'This is the error message in the index.php template.', 'bonestheme' ); ?></p>
+					</footer>
+				</article>
 
-									<h3 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-									<p class="byline vcard"><?php
-										printf(__( 'Posted <time class="updated" datetime="%1$s" pubdate>%2$s</time> by <span class="author">%3$s</span> <span class="amp">&</span> filed under %4$s.', 'bonestheme' ), get_the_time('Y-m-j'), get_the_time(__( 'F jS, Y', 'bonestheme' )), bones_get_the_author_posts_link(), get_the_category_list(', '));
-									?></p>
+		<?php endif; ?>
 
-								</header>
-
-								<section class="entry-content clearfix">
-
-									<?php the_post_thumbnail( 'bones-thumb-300' ); ?>
-
-									<?php the_excerpt(); ?>
-
-								</section>
-
-								<footer class="article-footer">
-
-								</footer>
-
-							</article>
-
-							<?php endwhile; ?>
-
-									<?php if ( function_exists( 'bones_page_navi' ) ) { ?>
-										<?php bones_page_navi(); ?>
-									<?php } else { ?>
-										<nav class="wp-prev-next">
-											<ul class="clearfix">
-												<li class="prev-link"><?php next_posts_link( __( '&laquo; Older Entries', 'bonestheme' )) ?></li>
-												<li class="next-link"><?php previous_posts_link( __( 'Newer Entries &raquo;', 'bonestheme' )) ?></li>
-											</ul>
-										</nav>
-									<?php } ?>
-
-							<?php else : ?>
-
-									<article id="post-not-found" class="hentry clearfix">
-										<header class="article-header">
-											<h1><?php _e( 'Oops, Post Not Found!', 'bonestheme' ); ?></h1>
-										</header>
-										<section class="entry-content">
-											<p><?php _e( 'Uh Oh. Something is missing. Try double checking things.', 'bonestheme' ); ?></p>
-										</section>
-										<footer class="article-footer">
-												<p><?php _e( 'This is the error message in the archive.php template.', 'bonestheme' ); ?></p>
-										</footer>
-									</article>
-
-							<?php endif; ?>
+		</div>
 
 						</div>
 
-						<?php get_sidebar(); ?>
 
 								</div>
 
-			</div>
 
 <?php get_footer(); ?>

@@ -41,6 +41,36 @@ require_once( 'library/bones.php' ); // if you remove this, bones will break
 /* import CPT */
 require_once('library/cpt-case.php');
 
+
+add_action( 'wp', 'sagip_setup_update_locations' );
+/**
+ * On an early action hook, check if the hook is scheduled - if not, schedule it.
+ */
+function sagip_setup_update_locations() {
+	if ( ! wp_next_scheduled( 'sagip_update_hourly' ) ) {
+		wp_schedule_event( time(), 'hourly', 'sagip_update_hourly');
+	}
+}
+add_action( 'sagip_update_hourly', 'sagip_get_all_locations' );
+/**
+ * Run through the db and update all location fields to use wp-geo-posts
+ */
+function sagip_get_all_locations() {
+	global $wpdb;
+	$result = $wpdb->get_results( "SELECT post_id, meta_value FROM $wpdb->postmeta WHERE meta_key='location' AND meta_value!=''" );
+	$geopost = new WP_GeoPost;
+	foreach($result as $r) {
+		if($wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key='wp_gp_location' AND meta_value='' AND post_id=".$r->post_id)) {
+			$geopost->update_location($r->post_id, $r->meta_value);
+		}
+	}
+}
+
+
+
+
+
+
 /*
 	Custom Columns in UI for "Case" CPT
  */
