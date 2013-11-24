@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Main "Case" Custom Post Type (CPT)
  */
@@ -94,7 +94,7 @@ function cptui_register_my_taxes_source() {
 			'choose_from_most_used' => '',
 			)
 		)
-	); 
+	);
 }
 
 // priority
@@ -151,7 +151,7 @@ function cptui_register_my_taxes_type() {
 			'add_or_remove_items' => '',
 			'choose_from_most_used' => '',
 			)
-		) 
+		)
 	);
 }
 
@@ -207,6 +207,7 @@ if(function_exists("register_field_group")) {
 				'maxlength' => '',
 				'formatting' => 'br',
 			),
+/*
 			array (
 				'key' => 'field_52899ff347382',
 				'label' => __('Latitude'),
@@ -235,6 +236,7 @@ if(function_exists("register_field_group")) {
 				'max' => '',
 				'step' => '',
 			),
+*/
 		),
 		'location' => array (
 			array (
