@@ -65,9 +65,6 @@
 					</thead>
 					<tbody>
 						<?php
-//						$q = new WP_Query( array('post_type' => 'case', 'posts_per_page' => '50') );
-//						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
-						query_posts( array( 'post_type' => 'case', 'posts_per_page' => '50' ) );
 						if (have_posts()) : while (have_posts()) : the_post();
 							$type = wp_get_post_terms($post->ID, 'type');
 							$type = $type[0];
