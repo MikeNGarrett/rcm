@@ -23,36 +23,26 @@
 						<?php
 						$q = new WP_Query( array('post_type' => 'case') );
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
-							$type = wp_get_post_terms($post->ID, 'type', array("fields" => "names"))[0];
-							$priority = wp_get_post_terms($post->ID, 'priority', array("fields" => "names"))[0];
-							$status = wp_get_post_terms($post->ID, 'status', array("fields" => "names"))[0];
+							$type = wp_get_post_terms($post->ID, 'type');
+							$type = $type[0];
+							$priority = wp_get_post_terms($post->ID, 'priority');
+							$priority = $priority[0];
+							$status = wp_get_post_terms($post->ID, 'status');
+							$status = $status[0];
 							//$status = get_field('status');
 							?>
 
-							<tr class="<?php echo $type[0]->slug." "; echo $priority[0]->slug; ?> case">
+							<tr class="<?php echo $type->slug." "; echo $priority->slug; ?> case">
 								<td>
-									<?php echo $type; ?>
+									<?php echo $type->name; ?>
 								</td>
 
 								<?php
-									$statusClass = $status[0]->slug;
-									$statusContent = $status;
-								} else {
-									// show status as dropdown
-									$statusClass = '';
-									$statusContent = "<select name='status' id='status_" . get_the_id() . "'>";
-									foreach ($statusOptions as $statusOption) {
-										$statusContent .= "<option value='{$statusOption->term_id}'";
-										if ($status[0]->term_id == $statusOption->term_id) {
-											$statusContent .= " selected='selected' ";
-										}
-										$statusContent .= ">{$statusOption->name}</option>";
-									}
-									$statusContent .= "</select>";
-								}
+									$statusClass = $status->slug;
+									$statusContent = $status->name;
 								?>
-								<td class="status sprdsht <?=$statusClass?>">
-									<?=$statusContent?>
+									<td class="status sprdsht <?php echo $statusClass?>">
+									<?php echo $statusContent?>
 								</td>
 								<td>
 									<?php the_field('reported_by'); ?>
@@ -60,8 +50,8 @@
 								<td>
 									<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
 								</td>
-								<td class="priority <?php echo $priority[0]->slug; ?> sprdsht">
-									<?php echo $priority; ?>
+								<td class="priority <?php echo $priority->slug; ?> sprdsht">
+									<?php echo $priority->name; ?>
 								</td>
 								<td>
 									<?php the_content(); ?>
