@@ -302,5 +302,4 @@ single-bookmarks.php
         */ ?>
 
 	</div> <!-- content -->
-
 <?php get_footer(); ?>

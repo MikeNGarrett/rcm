@@ -196,6 +196,7 @@ a.casebutton:active {
     background:#5d81ab;
     border-color:#80a9da;
 }
+
 .dataTables_filter, .dataTables_length {
 	padding-bottom: 30px;
 }
@@ -269,17 +270,65 @@ ul.case-summ { margin:0; }
 a.casestatus { font-weight:bold; color:#04A700; }
 .panel-heading h1 { font-size: 1.75em;  }
 
-.case-summ input[type="button"], select { margin: 0; vertical-align: middle } 
+.case-summ input[type="button"], select { margin: 0; vertical-align: middle }
 
 
 /* case status */
-.errorMsg, .successMsg { 
-	border-radius: 6px; 
-	margin-bottom: 20px; 
-	font-size: 12px; 
-	margin: 0px 0px 0px 10px; 
+.errorMsg, .successMsg {
+	border-radius: 6px;
+	margin-bottom: 20px;
+	font-size: 12px;
+	margin: 0px 0px 0px 10px;
 	padding: 3px 5px 3px 23px !important;
 }
 .errorMsg {  background: url(../images/cross.png) no-repeat #FFEBED 4px;  border: 1px solid #FCD2D7;  color: #9C434F;  }
 .successMsg {  background: url(../images/check.png) no-repeat #EDFCF1 4px;  border: 1px solid #8CBD99;  color: #2F8245; }
 .loader { margin-left: 10px; vertical-align: middle; }
+
+.faceted-search-div
+{
+    background: #ccc;
+}
+
+.faceted-search-div form#faceted-search
+{
+    margin: 20px;
+}
+
+form#faceted-search p
+{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+form#faceted-search p label
+{
+    margin-right: 5px;
+}
+
+form#faceted-search input
+{
+    height: 30px;
+}
+
+form#faceted-search select
+{
+    height: 30px;
+}
+
+form#faceted-search .facetious_submit_button
+{
+    border: 0;
+    background-color: #d70000;
+    /*border-top: 1px solid #ec4b4c;
+    border-left: 1px solid #ec4b4c;
+    border-bottom: 1px solid #9d0000;
+    border-right: 1px solid #9d0000;*/
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #fff;
+    height: 30px;
+    padding: 3px 10px;
+}
