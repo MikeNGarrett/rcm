@@ -3,9 +3,9 @@
 <div id="content" class="row">
 
 	<div id="inner-content" class="col-md-12">
-			
+
 			<div id="systemMsg"></div>
-			
+
 			<div id="main" class="twelvecol first clearfix" role="main">
 				<table id="caseTable">
 					<thead>
@@ -23,41 +23,48 @@
 						<?php
 						$q = new WP_Query( array('post_type' => 'case') );
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
-							$type = get_field('type');
-							$priority = get_field('priority');
-							$status = get_field('status');
+							$type = wp_get_post_terms($post->ID, 'type', array("fields" => "names"))[0];
+							$priority = wp_get_post_terms($post->ID, 'priority', array("fields" => "names"))[0];
+							$status = wp_get_post_terms($post->ID, 'status', array("fields" => "names"))[0];
+							//$status = get_field('status');
 							?>
 
 							<tr class="<?php echo $type[0]->slug." "; echo $priority[0]->slug; ?> case">
 								<td>
-									<?php echo $type[0]->name; ?>
+									<?php echo $type; ?>
 								</td>
 
 								<?php
 									$statusClass = $status[0]->slug;
-									$statusContent = $status[0]->name;
+									$statusContent = $status;
+								} else {
+									// show status as dropdown
+									$statusClass = '';
+									$statusContent = "<select name='status' id='status_" . get_the_id() . "'>";
+									foreach ($statusOptions as $statusOption) {
+										$statusContent .= "<option value='{$statusOption->term_id}'";
+										if ($status[0]->term_id == $statusOption->term_id) {
+											$statusContent .= " selected='selected' ";
+										}
+										$statusContent .= ">{$statusOption->name}</option>";
+									}
+									$statusContent .= "</select>";
+								}
 								?>
 								<td class="status sprdsht <?=$statusClass?>">
 									<?=$statusContent?>
 								</td>
 								<td>
-									<?php
-									if($type[0]->slug == 'rescue') {
-										the_field('name');
-									}
-									if($type[0]->slug == 'tracing') {
-										the_field('tracing_name');
-									}
-									?>
+									<?php the_field('reported_by'); ?>
 								</td>
 								<td>
 									<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
 								</td>
 								<td class="priority <?php echo $priority[0]->slug; ?> sprdsht">
-									<?php echo $priority[0]->name; ?>
+									<?php echo $priority; ?>
 								</td>
 								<td>
-									<?php the_field('summary'); ?>
+									<?php the_content(); ?>
 								</td>
 								<td>
 									<?php if (is_user_logged_in()): ?>
