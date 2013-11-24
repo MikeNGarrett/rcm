@@ -245,7 +245,7 @@ function bones_wpsearch($form) {
 
 /************* POST STATUS AJAX  *****************/
 add_action('wp_enqueue_scripts', 'updatePostStatusScripts');
-add_action("wp_ajax_nopriv_updatePostStatus", "postStatusNoAction");  
+add_action("wp_ajax_nopriv_updatePostStatus", "postStatusNoAction");
 add_action("wp_ajax_updatePostStatus", "updatePostStatus");
 
 function updatePostStatusScripts() {
@@ -257,10 +257,10 @@ function updatePostStatusScripts() {
 }
 
 function updatePostStatus() {
-	if (empty($_POST['nextNonce']) 
+	if (empty($_POST['nextNonce'])
 		|| empty($_POST['postId'])
 		|| empty($_POST['statusId'])
-		|| !wp_verify_nonce($_POST['nextNonce'], 'update_status_nonce')) { 
+		|| !wp_verify_nonce($_POST['nextNonce'], 'update_status_nonce')) {
 		die;
 	}
 	$post = get_post($_POST['postId']);

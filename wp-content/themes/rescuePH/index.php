@@ -12,16 +12,16 @@
 						<tr>
 							<th>Type</th>
 							<th>Status</th>
-							<th>Name</th>
-							<th>Date</th>
+							<th>Concern</th>
 							<th>Priority</th>
-							<th>Summary</th>
-							<th>Actions</th>
+							<th>Date</th>
+							<th>Reported By</th>
+							<th>View Case</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
-						$q = new WP_Query( array('post_type' => 'case') );
+						$q = new WP_Query( array('post_type' => 'case', 'posts_per_page' => '50') );
 						if ($q->have_posts()) : while ($q->have_posts()) : $q->the_post();
 							$type = wp_get_post_terms($post->ID, 'type');
 							$type = $type[0];
@@ -36,31 +36,23 @@
 								<td>
 									<?php echo $type->name; ?>
 								</td>
-
-								<?php
-									$statusClass = $status->slug;
-									$statusContent = $status->name;
-								?>
-									<td class="status sprdsht <?php echo $statusClass?>">
-									<?php echo $statusContent?>
+								<td class="status sprdsht <?php echo $status->slug; ?>">
+									<?php echo $status->name; ?>
 								</td>
-								<td>
-									<?php the_field('reported_by'); ?>
-								</td>
-								<td>
-									<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
+								<td class="concern">
+									<?php the_field('concern'); ?>
 								</td>
 								<td class="priority <?php echo $priority->slug; ?> sprdsht">
 									<?php echo $priority->name; ?>
 								</td>
-								<td>
-									<?php the_content(); ?>
+								<td class="date">
+									<a href="<?php the_permalink(); ?>"><?php the_time(get_option('date_format')); ?></a>
 								</td>
-								<td>
-									<?php if (is_user_logged_in()): ?>
-									<a href="javascript:void(0)" class="update-action" id="update_<?php the_id() ?>">update</a>
-									<?php endif ?>
-									<a href="<?php the_permalink(); ?>" target="_blank">view case</a>
+								<td class="reportedBy">
+									<?php the_field('reported_by'); ?>
+								</td>
+								<td class="action">
+									<a href="<?php the_permalink(); ?>" target="_blank" >view case</a>
 								</td>
 							</tr>
 						<?php endwhile; ?>

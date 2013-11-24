@@ -58,7 +58,7 @@ The comments page for Bones
 
 <section id="respond" class="respond-form">
 
-	<h3 id="comment-form-title" class="h2"><?php comment_form_title( __( 'Leave a Reply', 'bonestheme' ), __( 'Leave a Reply to %s', 'bonestheme' )); ?></h3>
+	<h3 id="comment-form-title" class="h2"><?php comment_form_title( __( 'Add an update', 'bonestheme' ), __( 'Add an update to %s', 'bonestheme' )); ?></h3>
 
 	<div id="cancel-comment-reply">
 		<p class="small"><?php cancel_comment_reply_link(); ?></p>
