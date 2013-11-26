@@ -1185,14 +1185,26 @@ var acf = {
 		},
 		init : function(){
 			
+			// vars (reference)
+			var $input = this.$input;
+			
+			
 			// is clone field?
-			if( acf.helpers.is_clone_field(this.$input) )
+			if( acf.helpers.is_clone_field($input) )
 			{
 				return;
 			}
 			
 			
-			this.$input.wpColorPicker();
+			this.$input.wpColorPicker({
+				
+				change: function(event, ui){
+					
+					$input.trigger('change');
+					
+				}
+				
+			});
 			
 			
 			
@@ -1990,7 +2002,19 @@ var acf = {
 			
 			// vars
 			var position = this.map.marker.getPosition(),
-				latlng = new google.maps.LatLng( position.lat(), position.lng() );
+				lat = this.o.lat,
+				lng = this.o.lng;
+			
+			
+			// if marker exists, center on the marker
+			if( position )
+			{
+				lat = position.lat();
+				lng = position.lng();
+			}
+			
+			
+			var latlng = new google.maps.LatLng( lat, lng );
 				
 			
 			// set center of map
@@ -2105,6 +2129,16 @@ var acf = {
 			
 			
 			this.$el.find('.search').val( val ).focus();
+			
+		},
+		
+		refresh : function(){
+			
+			// trigger resize on div
+			google.maps.event.trigger(this.map, 'resize');
+			
+			// center map
+			this.center();
 			
 		}
 	
@@ -2221,7 +2255,17 @@ var acf = {
 		{
 			$el.addClass('active');
 		}
-			
+		
+	});
+	
+	$(document).on('acf/fields/tab/show', function( e, $field ){
+		
+		// validate
+		if( $field.attr('data-field_type') == 'google_map' )
+		{
+			acf.fields.location.set({ $el : $field.find('.acf-google-map') }).refresh();
+		}
+		
 	});
 	
 
@@ -3202,16 +3246,31 @@ var acf = {
 		// hide / show
 		$wrap.children('.field_type-tab').each(function(){
 			
-			var $tab = $(this);
+			// vars
+			var $tab = $(this),
+				show =  false;
+				
 			
 			if( $tab.hasClass('field_key-' + id) )
 			{
-				$tab.nextUntil('.field_type-tab').removeClass('acf-tab_group-hide').addClass('acf-tab_group-show');
+				show = true;
 			}
-			else
-			{
-				$tab.nextUntil('.field_type-tab').removeClass('acf-tab_group-show').addClass('acf-tab_group-hide');
-			}
+			
+			
+			$tab.nextUntil('.field_type-tab').each(function(){
+				
+				if( show )
+				{
+					$(this).removeClass('acf-tab_group-hide').addClass('acf-tab_group-show');
+					$(document).trigger('acf/fields/tab/show', [ $(this) ]);
+				}
+				else
+				{
+					$(this).removeClass('acf-tab_group-show').addClass('acf-tab_group-hide');
+					$(document).trigger('acf/fields/tab/hide', [ $(this) ]);
+				}
+				
+			});
 			
 		});
 
@@ -3326,6 +3385,10 @@ var acf = {
 		
 		validate : function( div ){
 			
+			// var
+			var ignore = false;
+			
+			
 			// set validation data
 			div.data('validation', true);
 			
@@ -3333,24 +3396,45 @@ var acf = {
 			// not visible
 			if( div.is(':hidden') )
 			{
-				return;
+				// ignore validation
+				ignore = true;
+				
+				
+				// if this field is hidden by a tab group, allow validation
+				if( div.hasClass('acf-tab_group-hide') )
+				{
+					ignore = false;
+					
+					
+					// vars
+					var $tab_field = div.prevAll('.field_type-tab:first');
+					
+					// if the tab itself is hidden, bypass validation
+					if( $tab_field.hasClass('acf-conditional_logic-hide') )
+					{
+						ignore = true;
+					}
+					else
+					{
+						// activate this tab as it holds hidden required field!
+						div.prevAll('.acf-tab-group:first').find('.acf-tab-button[data-id="' + $tab_field.attr('data-field_key') + '"]').trigger('click');
+					}
+				}
 			}
+			
 			
 			// if is hidden by conditional logic, ignore
 			if( div.hasClass('acf-conditional_logic-hide') )
 			{
+				ignore = true;
+			}
+			
+			
+			if( ignore )
+			{
 				return;
 			}
 			
-			
-			// if is hidden by conditional logic on a parent tab, ignore
-			if( div.hasClass('acf-tab_group-hide') )
-			{
-				if( div.prevAll('.field_type-tab:first').hasClass('acf-conditional_logic-hide') )
-				{
-					return;
-				}
-			}
 			
 			
 			// text / textarea

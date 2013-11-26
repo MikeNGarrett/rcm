@@ -870,6 +870,13 @@ class acf_field_relationship extends acf_field
 	
 	function update_value( $value, $post_id, $field )
 	{
+		// validate
+		if( empty($value) )
+		{
+			return $value;
+		}
+		
+		
 		if( is_string($value) )
 		{
 			// string
