@@ -85,31 +85,31 @@ table.dataTable td {
 	line-height: 2;
 	margin: 5px;
 }
-.priority.low {
+.priority.low, table.dataTable tr.odd td.sorting_1.priority.low, table.dataTable tr.even td.sorting_1.priority.low {
 	background: #1F0000;
 }
-.priority.normal {
+.priority.normal, table.dataTable tr.odd td.sorting_1.priority.normal, table.dataTable tr.even td.sorting_1.priority.normal {
 	background: #3A0000;
 }
-.priority.high {
+.priority.high, table.dataTable tr.odd td.sorting_1.priority.high, table.dataTable tr.even td.sorting_1.priority.high {
 	background: #C00000;
 }
-.priority.urgent {
+.priority.urgent, table.dataTable tr.odd td.sorting_1.priority.urgent, table.dataTable tr.even td.sorting_1.priority.urgent {
 	background: #FF3300;
 }
-.status.on-hold {
+.status.on-hold, table.dataTable tr.odd td.sorting_1.status.on-hold, table.dataTable tr.even td.sorting_1.status.on-hold {
   color: #a9a9a4;
 }
-.status.new-case {
+.status.new-case, table.dataTable tr.odd td.sorting_1.status.new-case, table.dataTable tr.even td.sorting_1.status.new-case {
   color: #00A8BE;
 }
-.status.help-on-the-way {
+.status.help-on-the-way, table.dataTable tr.odd td.sorting_1.status.help-on-the-way, table.dataTable tr.even td.sorting_1.status.help-on-the-way {
   color: #FF3300;
 }
-.status.closed {
+.status.closed, table.dataTable tr.odd td.sorting_1.status.closed, table.dataTable tr.even td.sorting_1.status.closed {
   color: #000;
 }
-.status.active {
+.status.active, table.dataTable tr.odd td.sorting_1.status.active, table.dataTable tr.even td.sorting_1.status.active {
   color: #04A700;
 }
 .button, button, input[type=button] {
