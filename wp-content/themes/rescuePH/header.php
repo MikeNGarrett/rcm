@@ -57,7 +57,7 @@
 					<?php // bloginfo('description'); ?>
 				</div>
 
-				<nav role="navigation" class="nav" id="main-nav">
+				<nav role="navigation" class="nav nav-collapse" id="main-nav">
 				<div class="nav wrap clearfix">
 					<?php bones_main_nav(); ?>
 				</div>

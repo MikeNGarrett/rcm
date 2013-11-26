@@ -42,6 +42,9 @@
     	  }
 		});
 		</script>
+		<script>
+		  var nav = responsiveNav(".nav-collapse");
+		</script>
             </div>
 	</body>
 
