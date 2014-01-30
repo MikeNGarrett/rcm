@@ -61,3 +61,7 @@ https://www.hipchat.com/g9bBgsIwG
 
 What's all this crazy wp-config stuff you're having me do?
 http://codex.wordpress.org/Editing_wp-config.php
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/MikeNGarrett/rcm/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
